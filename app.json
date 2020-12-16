@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "CauchReact",
-    "slug": "CauchReact",
-    "version": "1.0.0",
+    "name": "Cauch",
+    "slug": "Cauch",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
