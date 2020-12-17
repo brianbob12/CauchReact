@@ -4,14 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './src/HomeScreen.js';
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
+
 
 function TagsScreen() {
   return (
@@ -117,6 +112,7 @@ export default function App() {
           activeTintColor: '#00a9d4FF',
           inactiveTintColor: 'gray',
         }}
+        initialRouteName={"Home"}
       >
         <Tab.Screen name="Tags" component={TagsScreen} />
         <Tab.Screen name="Classroom" component={ClassroomScreen} />
