@@ -4,9 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './src/HomeScreen.js';
+import HomeScreen from './src/Screens/HomeScreen.js';
 
-
+//context stuff
 
 function TagsScreen() {
   return (
@@ -111,6 +111,7 @@ export default function App() {
         tabBarOptions={{
           activeTintColor: '#00a9d4FF',
           inactiveTintColor: 'gray',
+        
         }}
         initialRouteName={"Home"}
       >
