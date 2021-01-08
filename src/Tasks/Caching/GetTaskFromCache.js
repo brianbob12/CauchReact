@@ -6,22 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 //outputs JSON object task
 
 
-export default async function GetTaskFromCache(id) {
+export default (id) => {
   //id as string
-
-  try {
-    const value = await AsyncStorage.getItem(id)
-    if (value == null) {
-      //no value is stored
-      return null//deal with this later
-    }
-    else {
-      return JSON.parse(value)
-    }
-  }
-  catch (e) {
-    // error reading value
-    return null
-  }
-
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem(id).then((result) => {
+      //TODO deal with error
+      resolve(JSON.parse(result))
+      //resolve({ name: "test", description: "descript", id: "id" })
+    })
+  })
 }

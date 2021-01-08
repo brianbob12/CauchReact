@@ -5,13 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 //inputs task as JSON object with ID
 //outputs nothing
 
-export default async function SaveTaskToCache(task) {
+export default (task) => {
   //task has name,description and id as string
-
-  try {
-    await AsyncStorage.setItem(task.id, JSON.stringify(task))
-  }
-  catch (e) {
-    //error
-  }
+  return new Promise((resolve, reject) => {
+    AsyncStorage.setItem(task.id, JSON.stringify(task), (error) => { resolve() })
+  })
 }
