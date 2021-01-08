@@ -1,18 +1,17 @@
 import *  as React from 'react';
-import { StyleSheet, ScrollView, Text, View } from "react-native";
+import { StyleSheet, ScrollView, Text, View } from "react-native"
 
 
 import { Ionicons } from '@expo/vector-icons'
-
-//ract boostrap
-import { Carousel } from "react-bootstrap"
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 //import context suff
 import { TaskContext } from "../Context/TaskContext.js"
 
 //import tasks
 import RealTask from "../Tasks/RealTask.js"
+
+//impory Slidy
+import Slidy from "../Slidy/Slidy.js"
 
 //import dayList
 import DayList from "../DayList/DayList.js"
@@ -24,11 +23,11 @@ export default (props, context) => {
 
   const tempDayList = new DayList(Date.now)
 
-  /*
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Carousel indicators={false} style={{ width: "100%", height: "100%" }}>
-        <Carousel.Item>
+      <Slidy>
+        <View>
           <View
             style={{
               width: "100%",
@@ -52,17 +51,12 @@ export default (props, context) => {
             </View>
           </View>
           <DayListView dayList={tempDayList} />
-        </Carousel.Item>
-        <Carousel.Item>
+        </View>
+        <View>
           <Text>Test</Text>
-        </Carousel.Item>
-      </Carousel>
+        </View>
+      </Slidy>
     </View>
   )
-  */
-  return (
-    <ScrollView>
-      <DayListView dayList={tempDayList} />
-    </ScrollView>
-  )
+
 }
