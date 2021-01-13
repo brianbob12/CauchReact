@@ -28,14 +28,33 @@ export default (props, context) => {
   //not hooks
 
   //other stuff
-  //bit of a hack here but it works. 
-  //TODO find the proper way of preventing a parent rerender. 
-  if (displayedTasks.length < props.dayList.realTaskIDs.length)
+  //check if the displayedTasks is up to date
+  let same = true
+  if (displayedTasks.length == props.dayList.realTaskIDs.length) {
+    //old school iteration
+    for (i = 0; i < displayedTasks.length; i++) {
+      if (displayedTasks[i].id == props.dayList.realTaskIDs[i]) {
+        continue
+      }
+      else {
+        same = false
+        break
+      }
+    }
+  }
+  else {
+    same = false
+  }
+  if (!same) {
+    const myPromises = []
     props.dayList.realTaskIDs.forEach((taskID) => {
-      GetTaskFromCache(taskID).then((value) => {
-        setDisplayedTasks(displayedTasks.concat([value]))
-      })
+      //TODO check if already loaded
+      myPromises.push(GetTaskFromCache(taskID))
     })
+    Promise.all(myPromises).then((values) => {
+      setDisplayedTasks(values)
+    })
+  }
 
   return (
     <SafeAreaView style={styles.container}>

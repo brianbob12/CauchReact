@@ -78,36 +78,7 @@ export default (props) => {
 
         </Slidy>
       </View>
-      <View style={{
-        background: "#0000005A",
-        flex: 1,
-        visibility: addTaskPopup ? "visible" : "hidden",
-        position: "absolute"
-      }}>
-        <TouchableWithoutFeedback onPress={() => {
-          setAddTaskPopup(false)
-        }}>
-          <View style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "stretch"
-          }}>
-            <View style={{ flex: 1, backgroundColor: "blue" }} />
-            <View style={{
-              flex: 4,
-              flexDirection: "column",
-              alignItems: "stretch"
-            }}>
-              <View style={{ flex: 1, backgroundColor: "green" }} />
-              <View style={{ flex: 4, backgroundColor: "#FFFFFF" }}>
 
-              </View>
-              <View style={{ flex: 1, backgroundColor: "yellow" }} />
-            </View>
-            <View style={{ flex: 1, backgroundColor: "red" }} />
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
     </View >
   )
 
