@@ -8,6 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default (task) => {
   //task has name,description and id as string
   return new Promise((resolve, reject) => {
-    AsyncStorage.setItem(task.id, JSON.stringify(task), (error) => { resolve() })
+    AsyncStorage.setItem("TASK" + task.id, JSON.stringify(task), (error) => { resolve() })
   })
 }

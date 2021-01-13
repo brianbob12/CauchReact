@@ -14,8 +14,6 @@ import HomeScreen from './src/Screens/HomeScreen.js';
 //import context suff
 import { TaskProvider } from "./src/Context/TaskContext.js"
 
-import RealTask from "./src/Tasks/RealTask.js";
-import VirtualTask from "./src/Tasks/VirtualTask.js";
 
 
 
@@ -141,11 +139,5 @@ export default function App() {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontFamily: 'Oxygen'
-  },
+
 });

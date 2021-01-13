@@ -1,8 +1,9 @@
 import *  as React from 'react'
 import { useState } from 'react'
-import { DragSortableView } from "react-native-drag-sort";
 
-import { Dimensions, ScrollView, SafeAreaView, Text, View } from "react-native"
+import { Dimensions, StyleSheet, SafeAreaView, Text, View, FlatList, StatusBar } from "react-native"
+
+import Constants from 'expo-constants'
 //shows a drag and drop list of all tasks in a given dayList
 //must be in a SafeAreaView
 
@@ -21,89 +22,53 @@ const childrenSpacing = 8
 export default (props, context) => {
 
   //hooks
-  const [displayedTasks, setDisplayedTasks] = useState([])
-  const [scrollEnabled, setScrollEnabled] = useState(true)
+  let [displayedTasks, setDisplayedTasks] = useState([])
+
 
   //not hooks
 
-  for (let i = 0; i < 30; i++) {
-    displayedTasks.push({
-      name: "testTask1",
-      description: "testDescription",
-      id: "44"
+  //other stuff
+  //bit of a hack here but it works. 
+  //TODO find the proper way of preventing a parent rerender. 
+  if (displayedTasks.length < props.dayList.realTaskIDs.length)
+    props.dayList.realTaskIDs.forEach((taskID) => {
+      GetTaskFromCache(taskID).then((value) => {
+        setDisplayedTasks(displayedTasks.concat([value]))
+      })
     })
-  }
-
-
-  SaveTaskToCache({
-    name: "savedTaskTest",
-    description: "This task was saved to cache",
-    id: "0"
-  }).then(() => {
-    GetTaskFromCache("0").then((result) => {
-      //setDisplayedTasks(displayedTasks.concat([result]))
-    })
-  })
-
-  //setDisplayedTasks(displayedTasks.concat([{ name: "1", description: "2", id: "45" }]))
-
-  let renderTask = (item, index) => {
-    return (
-      <View
-        style={{
-          backgroundColor: "#d8d8d8",
-          justifyContent: "center",
-          alignItems: "center",
-          width: childrenWidth - childrenSpacing * 2,
-          height: childrenHeight - childrenSpacing,
-          marginLeft: childrenSpacing
-        }}
-      >
-        <Text>{item.name}</Text>
-      </View>
-    )
-  }
-
-  let myScrollView = null
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
-      <ScrollView
-        ref={(scrollView) => myScrollView = scrollView}
-        scrollEnabled={scrollEnabled}
-        style={{
-          paddingTop: 5
-        }}
-      >
-        <DragSortableView
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          dataSource={displayedTasks}
-          sortable={true}
-          childrenHeight={childrenHeight}
-          childrenWidth={childrenWidth}
-          parentWidth={parentWidth}
-          renderItem={(item, index) => {
-            return renderTask(item, index)
-          }}
-          scaleStatus={'scaleY'}
-          onDragStart={(startIndex, endIndex) => {
-            setScrollEnabled(false)
-          }}
-          onDragEnd={(startIndex) => {
-            setScrollEnabled(true)
-          }}
-          onDataChange={(data) => {
-
-          }}
-          keyExtractor={(item, index) => item.txt} // FlatList作用一样，优化
-          onClickItem={(data, item, index) => { }}
-        >
-        </DragSortableView>
-      </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={displayedTasks}
+        renderItem={renderTask}
+        keyExtractor={(item) => item.id}
+      />
     </SafeAreaView>
   )
 
 }
+let renderTask = ({ item }) => {
+  return (
+
+    <View style={{ width: Dimensions.get("window").width, padding: 15, justifyContent: "center", alignItems: "center" }}>
+      <Text>{item.name}</Text>
+    </View>
+
+
+  )
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+})

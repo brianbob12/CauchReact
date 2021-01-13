@@ -1,4 +1,4 @@
-//a function to get a real task from cache by ID
+//a function to get a dayList from cache by the date 
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -6,13 +6,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 //outputs JSON object task
 
 
-export default (id) => {
-  //id as string
+export default (date) => {
+  // takes date as javascript Date object
   return new Promise((resolve, reject) => {
-    AsyncStorage.getItem("TASK" + id).then((result) => {
+    AsyncStorage.getItem("DAYLIST" + date.toString(36)).then((result) => {
       //TODO deal with error
       resolve(JSON.parse(result))
-      //resolve({ name: "test", description: "descript", id: "id" })
     })
   })
 }

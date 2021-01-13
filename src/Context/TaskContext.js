@@ -1,5 +1,5 @@
-import * as React from 'react';
-import RepeatingTask from '../Tasks/RepeatingTask';
+import * as React from 'react'
+
 
 //task context is a function that allows all child components to have access to the following:
 //RealTaskIDMap -- a map of IDs to Real tasks

@@ -5,7 +5,7 @@ import { StyleSheet, ScrollView, Text, View } from "react-native"
 
 export default (props) => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       {props.children}
     </View>
   )
