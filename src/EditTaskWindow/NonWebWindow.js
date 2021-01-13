@@ -1,40 +1,33 @@
 import *  as React from 'react';
 import { StyleSheet, Modal, Text, View, TouchableHighlight, TextInput } from "react-native"
 
-export default (props) => {
+export default ({ visible, onClose, task }) => {
 
-  var holdingTitle = "New Task"
-  var holdingDescription = "Description"
 
   return (
     <View style={{ position: "absolute" }}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={props.visible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
+        visible={visible}
+
 
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TextInput style={styles.title}
-              onChangeText={(newText) => { holdingTitle = newText }}>
-              {holdingTitle}
+              onChangeText={(newText) => { task.name = newText }}>
+              {task.name}
             </TextInput>
             <TextInput style={styles.description}
-              onChangeText={(newText) => { holdingDescription = newText }}>
-              {holdingDescription}
+              onChangeText={(newText) => { task.description = newText }}>
+              {task.description}
             </TextInput>
             <View style={{ flexDirection: 'row' }}>
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#00a9d4FF', flex: 3 }}
                 onPress={() => {
-                  props.onClose(!props.visible, {
-                    name: holdingTitle,
-                    description: holdingDescription
-                  });
+                  onClose(!visible, task)
                 }}
               >
                 <Text style={styles.textStyle}>Done</Text>
@@ -43,7 +36,7 @@ export default (props) => {
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#ff0000FF', flex: 3 }}
                 onPress={() => {
-                  props.onClose(!props.visible, null);
+                  onClose(!visible, null)
                 }}
               >
                 <Text style={styles.textStyle}>Cancel</Text>
@@ -52,7 +45,7 @@ export default (props) => {
           </View>
         </View>
       </Modal>
-    </View>
+    </View >
   )
 }
 

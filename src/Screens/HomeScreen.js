@@ -12,8 +12,8 @@ import Slidy from "../Slidy/Slidy.js"
 
 //import dayListView
 import DayListView from "../DayListView/DayListView.js"
-import AddNewTaskWindow from '../AddNewTaskWindow/AddNewTaskWindow.js';
-import SaveDayListToCahce from '../DayList/SaveDayListToCahce.js';
+import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js';
+import SaveDayListToCahce from '../DayList/SaveDayListToCache.js';
 
 
 export default (props) => {
@@ -26,15 +26,18 @@ export default (props) => {
 
   const [addTaskPopup, setAddTaskPopup] = useState(false)
 
+
+
   return (
     <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
-      <AddNewTaskWindow
+      <EditTaskWindow
         visible={addTaskPopup}
         onClose={(newVal) => { setAddTaskPopup(newVal) }}
         selectedDayList={selectedDayList}
         onNewTaskReady={() => {
           setSelectedDayList({ ...selectedDayList })//set to shallow copy to force rerender  
         }}
+        task={null}
       />
       <View style={{ flex: 1 }}>
         <Slidy>
@@ -55,8 +58,9 @@ export default (props) => {
                 <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                   <Ionicons name="reorder-four" size={35} color="gray" />
                 </View>
-                <View style={{ flex: 4, alignItems: "center", justifyContent: "center" }}>
-                  <Text>Schedule for </Text><Text>Today</Text>
+                <View style={{ flex: 4, alignItems: "center", justifyContent: "center", flexDirection: "row" }}>
+                  <Text style={{ fontSize: 15 }}>Schedule for </Text>
+                  <Text style={{ fontSize: 15 }}>Today</Text>
                 </View>
                 <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
                   <TouchableWithoutFeedback onPress={() => {

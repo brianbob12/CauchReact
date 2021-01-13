@@ -10,6 +10,7 @@ import Constants from 'expo-constants'
 //TEMPORARY
 import SaveTaskToCache from "../Tasks/Caching/SaveTaskToCache.js"
 import GetTaskFromCache from "../Tasks/Caching/GetTaskFromCache.js"
+import TaskListView from '../Tasks/TaskListView.js'
 
 //setup variables
 const { width } = Dimensions.get('window')
@@ -32,7 +33,7 @@ export default (props, context) => {
   let same = true
   if (displayedTasks.length == props.dayList.realTaskIDs.length) {
     //old school iteration
-    for (i = 0; i < displayedTasks.length; i++) {
+    for (let i = 0; i < displayedTasks.length; i++) {
       if (displayedTasks[i].id == props.dayList.realTaskIDs[i]) {
         continue
       }
@@ -71,7 +72,7 @@ let renderTask = ({ item }) => {
   return (
 
     <View style={{ width: Dimensions.get("window").width, padding: 15, justifyContent: "center", alignItems: "center" }}>
-      <Text>{item.name}</Text>
+      <TaskListView task={item} />
     </View>
 
 
