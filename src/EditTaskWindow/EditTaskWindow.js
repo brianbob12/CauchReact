@@ -8,17 +8,21 @@ import SaveDayListToCahce from '../DayList/SaveDayListToCache';
 
 export default ({ visible, selectedDayList, onNewTaskReady, task, onClose }) => {
   let addNewTask = (task, dayList) => {
-    task.id = Math.random().toString(32)
+    if (task.id == undefined || task.id == null) {
+      task.id = Math.random().toString(32)
+    }
     SaveTaskToCache(task).then(onNewTaskReady)
 
-    dayList.realTaskIDs.push(task.id)
-    let PB = SaveDayListToCahce(dayList)
+    if (!dayList.realTaskIDs.includes(task.id)) {
+      dayList.realTaskIDs.push(task.id)
+    }
+    SaveDayListToCahce(dayList)
   }
   let myTask = task
   if (task == null || task == undefined) {
     myTask = {
       name: "New Task",
-      description: "DescriptionOfTask"
+      description: "Description Of Task"
     }
   }
   if (typeof document != "undefined") {

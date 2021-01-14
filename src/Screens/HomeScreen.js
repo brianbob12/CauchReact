@@ -26,7 +26,7 @@ export default (props) => {
 
   const [addTaskPopup, setAddTaskPopup] = useState(false)
 
-
+  const [selectedTask, setSelectedTask] = useState(null)
 
   return (
     <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
@@ -37,7 +37,7 @@ export default (props) => {
         onNewTaskReady={() => {
           setSelectedDayList({ ...selectedDayList })//set to shallow copy to force rerender  
         }}
-        task={null}
+        task={selectedTask}
       />
       <View style={{ flex: 1 }}>
         <Slidy>
@@ -76,7 +76,13 @@ export default (props) => {
               justifyContent: "center",
               alignItems: "center"
             }}>
-              <DayListView dayList={selectedDayList} />
+              <DayListView
+                dayList={selectedDayList}
+                onTaskClicked={(task) => {
+                  setSelectedTask(task)
+                  setAddTaskPopup(true)
+                }}
+              />
             </View>
           </View>
 

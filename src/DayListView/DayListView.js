@@ -20,21 +20,30 @@ const childrenWidth = width
 const childrenHeight = 48
 const childrenSpacing = 8
 
-export default (props, context) => {
+export default ({ dayList, onTaskClicked }) => {
 
   //hooks
   let [displayedTasks, setDisplayedTasks] = useState([])
 
 
   //not hooks
+  let renderTask = ({ item }) => {
+    return (
 
+      <View style={{ width: Dimensions.get("window").width, padding: 15, justifyContent: "center", alignItems: "center" }}>
+        <TaskListView task={item} onClick={onTaskClicked} />
+      </View>
+
+
+    )
+  }
   //other stuff
   //check if the displayedTasks is up to date
   let same = true
-  if (displayedTasks.length == props.dayList.realTaskIDs.length) {
+  if (displayedTasks.length == dayList.realTaskIDs.length) {
     //old school iteration
     for (let i = 0; i < displayedTasks.length; i++) {
-      if (displayedTasks[i].id == props.dayList.realTaskIDs[i]) {
+      if (displayedTasks[i].id == dayList.realTaskIDs[i]) {
         continue
       }
       else {
@@ -48,7 +57,7 @@ export default (props, context) => {
   }
   if (!same) {
     const myPromises = []
-    props.dayList.realTaskIDs.forEach((taskID) => {
+    dayList.realTaskIDs.forEach((taskID) => {
       //TODO check if already loaded
       myPromises.push(GetTaskFromCache(taskID))
     })
@@ -68,16 +77,7 @@ export default (props, context) => {
   )
 
 }
-let renderTask = ({ item }) => {
-  return (
 
-    <View style={{ width: Dimensions.get("window").width, padding: 15, justifyContent: "center", alignItems: "center" }}>
-      <TaskListView task={item} />
-    </View>
-
-
-  )
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
