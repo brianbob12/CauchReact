@@ -22,6 +22,10 @@ const childrenSpacing = 8
 
 export default ({ dayList, onTaskClicked }) => {
 
+  if (dayList == null) {
+    dayList = { realTaskIDs: [] }
+  }
+
   //hooks
   let [displayedTasks, setDisplayedTasks] = useState([])
 

@@ -12,17 +12,32 @@ import Slidy from "../Slidy/Slidy.js"
 
 //import dayListView
 import DayListView from "../DayListView/DayListView.js"
-import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js';
-import SaveDayListToCahce from '../DayList/SaveDayListToCache.js';
+import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js'
+import SaveDayListToCache from '../DayList/SaveDayListToCache.js'
+import GetDayListFromCache from "../DayList/GetDayListFromCache.js"
 
 
 export default (props) => {
 
-  const [selectedDayList, setSelectedDayList] = useState({
-    day: Date.now,
-    realTaskIDs: []
-  })
-  SaveDayListToCahce(selectedDayList)
+  const [selectedDayList, setSelectedDayList] = useState(null)
+
+  //import dayList from cache
+  if (selectedDayList == null) {
+    GetDayListFromCache(Date.now).then((value) => {
+      if (value == undefined) {
+        setSelectedDayList({
+          day: Date.now,
+          realTaskIDs: []
+        })
+        SaveDayListToCache(selectedDayList)
+      }
+      else {
+        setSelectedDayList(value)
+      }
+    })
+
+  }
+
 
   const [addTaskPopup, setAddTaskPopup] = useState(false)
 
