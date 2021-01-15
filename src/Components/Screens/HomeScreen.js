@@ -13,8 +13,8 @@ import Slidy from "../Slidy/Slidy.js"
 //import dayListView
 import DayListView from "../DayListView/DayListView.js"
 import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js'
-import SaveDayListToCache from '../../DayList/SaveDayListToCache.js'
-import GetDayListFromCache from "../../DayList/GetDayListFromCache.js"
+import SaveDayListToCache from '../../Functions/DayList/SaveDayListToCache.js'
+import GetDayListFromCache from "../../Functions/DayList/GetDayListFromCache.js"
 
 
 export default (props) => {

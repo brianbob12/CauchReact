@@ -8,10 +8,10 @@ import Constants from 'expo-constants'
 //must be in a SafeAreaView
 
 //TEMPORARY
-import SaveTaskToCache from "../../Tasks/Caching/SaveTaskToCache.js"
-import GetTaskFromCache from "../../Tasks/Caching/GetTaskFromCache.js"
-import TaskListView from '../../Tasks/TaskListView.js'
-import SaveDayListToCache from '../../DayList/SaveDayListToCache.js'
+import SaveTaskToCache from "../../Functions/Tasks/Caching/SaveTaskToCache.js"
+import GetTaskFromCache from "../../Functions/Tasks/Caching/GetTaskFromCache.js"
+import TaskListView from '../Tasks/TaskListView.js'
+import SaveDayListToCache from '../../Functions/DayList/SaveDayListToCache.js'
 
 //setup variables
 const { width } = Dimensions.get('window')
