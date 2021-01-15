@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //import screens
 
-import HomeScreen from './src/Screens/HomeScreen.js';
+import HomeScreen from './src/Components/Screens/HomeScreen.js';
 
 //import task stuff
 

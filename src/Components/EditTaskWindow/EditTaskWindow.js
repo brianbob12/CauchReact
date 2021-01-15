@@ -3,8 +3,8 @@ import *  as React from 'react';
 import WebWindow from './WebWindow'
 import NonWebWindow from "./NonWebWindow"
 
-import SaveTaskToCache from "../Tasks/Caching/SaveTaskToCache"
-import SaveDayListToCahce from '../DayList/SaveDayListToCache';
+import SaveTaskToCache from "../../Tasks/Caching/SaveTaskToCache"
+import SaveDayListToCahce from '../../DayList/SaveDayListToCache';
 
 export default ({ visible, selectedDayList, onNewTaskReady, task, onClose }) => {
   let addNewTask = (task, dayList) => {
