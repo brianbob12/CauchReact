@@ -23,6 +23,7 @@ export default (props) => {
 
   //import dayList from cache
   if (selectedDayList == null) {
+    console.log(Date.now)
     GetDayListFromCache(Date.now).then((value) => {
       if (value == undefined) {
         setSelectedDayList({
@@ -80,6 +81,7 @@ export default (props) => {
                 <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
                   <TouchableWithoutFeedback onPress={() => {
                     setAddTaskPopup(true)
+                    setSelectedTask(null)
                   }}>
                     <Ionicons name="add" size={35} color="gray" />
                   </TouchableWithoutFeedback>
