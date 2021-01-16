@@ -20,7 +20,9 @@ export default ({ visible, onClose, task }) => {
               {task.name}
             </TextInput>
             <TextInput style={styles.description}
-              onChangeText={(newText) => { task.description = newText }}>
+              onChangeText={(newText) => { task.description = newText }}
+              multiline={true}
+            >
               {task.description}
             </TextInput>
             <View style={{ flexDirection: 'row' }}>
@@ -30,7 +32,7 @@ export default ({ visible, onClose, task }) => {
                   onClose(!visible, task)
                 }}
               >
-                <Text style={styles.textStyle}>Done</Text>
+                <Text style={styles.textStyle}>Confirm</Text>
               </TouchableHighlight>
               <View style={{ flex: 1 }} />
               <TouchableHighlight

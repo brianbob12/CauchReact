@@ -31,7 +31,7 @@ export default ({ task, onClick, onDeleteTask }) => {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <View>
+        <View style={{ flex: 3 }}>
           <Text>{task.name}</Text>
         </View>
         <View style={{ flex: 1 }} />
