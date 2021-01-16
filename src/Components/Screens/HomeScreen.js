@@ -7,6 +7,8 @@ import { useState } from 'react'
 
 import { Ionicons } from '@expo/vector-icons'
 
+import getDayToday from "../../Functions/DayList/GetDayToday.js"
+
 //impory Slidy
 import Slidy from "../Slidy/Slidy.js"
 
@@ -23,11 +25,10 @@ export default (props) => {
 
   //import dayList from cache
   if (selectedDayList == null) {
-    console.log(Date.now)
-    GetDayListFromCache(Date.now).then((value) => {
+    GetDayListFromCache(getDayToday()).then((value) => {
       if (value == undefined) {
         setSelectedDayList({
-          day: Date.now,
+          day: getDayToday(),
           realTaskIDs: []
         })
         SaveDayListToCache(selectedDayList)
