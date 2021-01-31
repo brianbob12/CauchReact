@@ -1,8 +1,9 @@
 import *  as React from 'react';
 import { StyleSheet, Modal, Text, View, TouchableHighlight, TextInput } from "react-native"
+import RNPickerSelect from 'react-native-picker-select'
 
 export default ({ visible, onClose, task }) => {
-
+  var selectedDay = "monday"
 
   return (
     <View style={{ position: "absolute" }}>
@@ -25,11 +26,25 @@ export default ({ visible, onClose, task }) => {
             >
               {task.description}
             </TextInput>
+            <RNPickerSelect
+              onValueChange={(value) => selectedDay = value}
+              items={[
+                { label: 'Monday', value: 'monday' },
+                { label: 'Tuesday', value: 'tuesday' },
+                { label: 'Wednesday', value: 'wednesday' },
+                { label: 'Thursday', value: 'thursday' },
+                { label: 'Friday', value: 'friday' },
+                { label: 'Saturday', value: 'saturday' },
+                { label: "Sunday", value: "sunday" }
+              ]}
+              placeholder={{}}
+              value={selectedDay}
+            />
             <View style={{ flexDirection: 'row' }}>
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#00a9d4FF', flex: 3 }}
                 onPress={() => {
-                  onClose(!visible, task)
+                  onClose(!visible, task, selectedDay)
                 }}
               >
                 <Text style={styles.textStyle}>Confirm</Text>

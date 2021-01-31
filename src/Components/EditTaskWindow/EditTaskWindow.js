@@ -6,17 +6,37 @@ import NonWebWindow from "./NonWebWindow"
 import SaveTaskToCache from "../../Functions/Tasks/Caching/SaveTaskToCache"
 import SaveDayListToCahce from '../../Functions/DayList/SaveDayListToCache';
 
-export default ({ visible, selectedDayList, onNewTaskReady, task, onClose }) => {
-  let addNewTask = (task, dayList) => {
+export default ({ visible, mondayDayList, tuesdayDayList, wednesdayDayList,
+  thursdayDayList, fridayDayList, saturdayDayList, sundayDayList, onNewTaskReady,
+  task, onClose }) => {
+  let addNewTask = (task, selectedDay) => {
     if (task.id == undefined || task.id == null) {
       task.id = Math.random().toString(32)
     }
-    SaveTaskToCache(task).then(onNewTaskReady)
-
-    if (!dayList.realTaskIDs.includes(task.id)) {
-      dayList.realTaskIDs.push(task.id)
+    SaveTaskToCache(task).then(onNewTaskReady(selectedDay))
+    var selectedDayList = mondayDayList
+    if (selectedDay == "tuesday") {
+      selectedDayList = tuesdayDayList
     }
-    SaveDayListToCahce(dayList)
+    else if (selectedDay == "wednesday") {
+      selectedDayList = wednesdayDayList
+    }
+    else if (selectedDay == "thursday") {
+      selectedDayList = thursdayDayList
+    }
+    else if (selectedDay == "friday") {
+      selectedDayList = fridayDayList
+    }
+    else if (selectedDay == "saturday") {
+      selectedDayList = saturdayDayList
+    }
+    else if (selectedDay == "sunday") {
+      selectedDayList = sundayDayList
+    }
+    if (!selectedDayList.realTaskIDs.includes(task.id)) {
+      selectedDayList.realTaskIDs.push(task.id)
+    }
+    SaveDayListToCahce(selectedDayList)
   }
   let myTask = task
   if (task == null || task == undefined) {
@@ -34,9 +54,12 @@ export default ({ visible, selectedDayList, onNewTaskReady, task, onClose }) => 
     return (
       <NonWebWindow
         visible={visible}
-        onClose={(visible, task) => {
+        onClose={(visible, task, selectedDay) => {
           //task is null if process was cancelled
-          if (task != null) { addNewTask(task, selectedDayList) }
+          if (task != null) {
+
+            addNewTask(task, selectedDay)
+          }
           onClose(visible)
         }
         }

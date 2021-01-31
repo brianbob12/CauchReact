@@ -21,7 +21,10 @@ const childrenWidth = width
 const childrenHeight = 48
 const childrenSpacing = 8
 
-export default ({ dayList, onTaskClicked }) => {
+export default ({ dayList, onTaskClicked, scrollEnabled }) => {
+  //scrollEnabled is a boolean that is false when scrolling should be prevented 
+  //dayList is the object that holds th realTaskIDs
+  //ontaskClicked is a callback for when tasks are clicked
 
   if (dayList == null) {
     dayList = { realTaskIDs: [] }
@@ -109,6 +112,7 @@ export default ({ dayList, onTaskClicked }) => {
         data={displayedTasks}
         renderItem={renderTask}
         keyExtractor={(item) => item.id}
+        scrollEnabled={scrollEnabled}
       />
     </SafeAreaView>
   )
