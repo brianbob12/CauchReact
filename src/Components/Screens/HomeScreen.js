@@ -5,17 +5,12 @@ import Constants from "expo-constants"
 
 import { useState } from 'react'
 
-import { Ionicons } from '@expo/vector-icons'
-
 import getDayToday from "../../Functions/DayList/GetDayToday.js"
 
 //impory Slidy
-import Slidy from "../Slidy/Slidy.js"
+import WeekSlider from "../Slidy/Slidy.js"
 
-import WeekListView from "../WeekListView/WeekListView.js"
-
-//import dayListView
-import DayListView from "../DayListView/DayListView.js"
+import WeekListViewWithHeader from "../WeekListViewWithHeader/WeekListViewWithHeader.js"
 import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js'
 import SaveDayListToCache from '../../Functions/DayList/SaveDayListToCache.js'
 import GetDayListFromCache from "../../Functions/DayList/GetDayListFromCache.js"
@@ -194,59 +189,20 @@ export default (props) => {
         task={selectedTask}
       />
       <View style={{ flex: 1 }}>
-        <Slidy>
-          <View style={{ flex: 1 }}>
-            <View>
-              <View
-                style={{
-                  width: "100%",
-                  height: 50,
-                  backgroundColor: "#FFFFFFFF",
-                  borderBottomColor: "#d8d8d8",
-                  borderBottomWidth: 1,
-                  justifyContent: "space-between",
-                  alignContent: "center",
-                  flexDirection: "row"
-                }}
-              >
-                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                  <Ionicons name="reorder-four" size={35} color="gray" />
-                </View>
-                <View style={{ flex: 4, alignItems: "center", justifyContent: "center", flexDirection: "row" }}>
-                  <Text style={{ fontSize: 15 }}>Schedule for </Text>
-                  <Text style={{ fontSize: 15 }}>Today</Text>
-                </View>
-                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
-                  <TouchableWithoutFeedback onPress={() => {
-                    setAddTaskPopup(true)
-                    setSelectedTask(null)
-                  }}>
-                    <Ionicons name="add" size={35} color="gray" />
-                  </TouchableWithoutFeedback>
-                </View>
-              </View>
-            </View>
-            <View style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
-            }}>
-              <WeekListView
-                mondayDayList={mondayDayList}
-                tuesdayDayList={tuesdayDayList}
-                wednesdayDayList={wednesdayDayList}
-                thursdayDayList={thursdayDayList}
-                fridayDayList={fridayDayList}
-                saturdayDayList={saturdayDayList}
-                sundayDayList={sundayDayList}
-                onTaskClicked={(task) => {
-                  setSelectedTask(task)
-                  setAddTaskPopup(true)
-                }} />
-            </View>
-          </View>
 
-        </Slidy>
+        <WeekSlider
+          mondayDayList={mondayDayList}
+          tuesdayDayList={tuesdayDayList}
+          wednesdayDayList={wednesdayDayList}
+          thursdayDayList={thursdayDayList}
+          fridayDayList={fridayDayList}
+          saturdayDayList={saturdayDayList}
+          sundayDayList={sundayDayList}
+          setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
+          setSelectedTask={(item) => { setSelectedTask(item) }}
+        />
+
+
       </View>
 
     </View >

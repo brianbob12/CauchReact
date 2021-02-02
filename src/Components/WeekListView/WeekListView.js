@@ -45,7 +45,7 @@ export default ({
             <View style={{ flex: 1 }}>
               {mondayDayList.realTaskIDs.length > 0 &&
                 <View style={{ flex: 1, alignItems: "center" }}>
-                  <Text>Monday</Text>
+                  <Text style={styles.dayTextStyle}>Monday</Text>
                   <DayListView
                     dayList={mondayDayList}
                     onTaskClicked={(task) => {
@@ -63,7 +63,7 @@ export default ({
             <View style={{ flex: 1 }}>
               {tuesdayDayList.realTaskIDs.length > 0 &&
                 <View style={{ flex: 1, alignItems: "center" }}>
-                  <Text>Tuesday</Text>
+                  <Text style={styles.dayTextStyle}>Tuesday</Text>
                   <DayListView
                     dayList={tuesdayDayList}
                     onTaskClicked={(task) => {
@@ -81,7 +81,7 @@ export default ({
             <View style={{ flex: 1 }}>
               {wednesdayDayList.realTaskIDs.length > 0 &&
                 <View style={{ flex: 1, alignItems: "center" }}>
-                  <Text>Wednesday</Text>
+                  <Text style={styles.dayTextStyle}>Wednesday</Text>
                   <DayListView
                     dayList={wednesdayDayList}
                     onTaskClicked={(task) => {
@@ -99,7 +99,7 @@ export default ({
             <View style={{ flex: 1 }}>
               {thursdayDayList.realTaskIDs.length > 0 &&
                 <View style={{ flex: 1, alignItems: "center" }}>
-                  <Text>Thursday</Text>
+                  <Text style={styles.dayTextStyle}>Thursday</Text>
                   <DayListView
                     dayList={thursdayDayList}
                     onTaskClicked={(task) => {
@@ -117,7 +117,7 @@ export default ({
             <View style={{ flex: 1 }}>
               {fridayDayList.realTaskIDs.length > 0 &&
                 <View style={{ flex: 1, alignItems: "center" }}>
-                  <Text>Friday</Text>
+                  <Text style={styles.dayTextStyle}>Friday</Text>
                   <DayListView
                     dayList={fridayDayList}
                     onTaskClicked={(task) => {
@@ -135,7 +135,7 @@ export default ({
             <View style={{ flex: 1 }}>
               {saturdayDayList.realTaskIDs.length > 0 &&
                 <View style={{ flex: 1, alignItems: "center" }}>
-                  <Text>Saturday</Text>
+                  <Text style={styles.dayTextStyle}>Saturday</Text>
                   <DayListView
                     dayList={saturdayDayList}
                     onTaskClicked={(task) => {
@@ -152,8 +152,8 @@ export default ({
           {sundayDayList != null &&
             <View style={{ flex: 1 }}>
               {sundayDayList.realTaskIDs.length > 0 &&
-                <View style={{ flex: 1, alignItems: "center" }}>
-                  <Text>Sunday</Text>
+                <View style={{ flex: 1, alignItems: "center", flexDirection: "column" }}>
+                  <Text style={styles.dayTextStyle}>Sunday</Text>
                   <DayListView
                     dayList={sundayDayList}
                     onTaskClicked={(task) => {
@@ -172,3 +172,9 @@ export default ({
   )
 
 }
+
+const styles = StyleSheet.create({
+  dayTextStyle: {
+    padding: 5
+  }
+})
