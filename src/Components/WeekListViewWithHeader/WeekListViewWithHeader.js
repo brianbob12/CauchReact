@@ -8,8 +8,7 @@ import Constants from "expo-constants"
 
 import { useState } from 'react'
 
-export default ({ mondayDayList, tuesdayDayList, wednesdayDayList, thursdayDayList,
-  fridayDayList, saturdayDayList, sundayDayList, setAddTaskPopup, setSelectedTask }) => {
+export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {
   return (
     <View style={{ flex: 1 }}>
       <View>
@@ -48,13 +47,13 @@ export default ({ mondayDayList, tuesdayDayList, wednesdayDayList, thursdayDayLi
         alignItems: "center"
       }}>
         <WeekListView
-          mondayDayList={mondayDayList}
-          tuesdayDayList={tuesdayDayList}
-          wednesdayDayList={wednesdayDayList}
-          thursdayDayList={thursdayDayList}
-          fridayDayList={fridayDayList}
-          saturdayDayList={saturdayDayList}
-          sundayDayList={sundayDayList}
+          mondayDayList={dayLists.monday}
+          tuesdayDayList={dayLists.tuesday}
+          wednesdayDayList={dayLists.wednesday}
+          thursdayDayList={dayLists.thursday}
+          fridayDayList={dayLists.friday}
+          saturdayDayList={dayLists.saturday}
+          sundayDayList={dayLists.sunday}
           onTaskClicked={(task) => {
             setSelectedTask(task)
             setAddTaskPopup(true)

@@ -5,9 +5,7 @@ import Constants from "expo-constants"
 
 import { useState } from 'react'
 
-import getDayToday from "../../Functions/DayList/GetDayToday.js"
-
-//impory Slidy
+//impory WeekSlider 
 import WeekSlider from "../Slidy/Slidy.js"
 
 import WeekListViewWithHeader from "../WeekListViewWithHeader/WeekListViewWithHeader.js"
@@ -15,6 +13,8 @@ import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js'
 import SaveDayListToCache from '../../Functions/DayList/SaveDayListToCache.js'
 import GetDayListFromCache from "../../Functions/DayList/GetDayListFromCache.js"
 import GetAllDaysThisWeek from "../../Functions/WeekList/GetAllDaysThisWeek.js"
+import GetAllDays from "../../Functions/WeekList/GetAllDays.js"
+
 
 export default (props) => {
   //hooks glorious hooks
@@ -23,183 +23,137 @@ export default (props) => {
 
   const [selectedTask, setSelectedTask] = useState(null)
 
+  //IMPORTANT: The current week, the preceeding week and the next week are all loaded
+  //a once. 
 
   //list of timestamps for the week
-  const [selectedWeek, setSelectedWeek] = useState(GetAllDaysThisWeek)
+  const [selectedWeek, setSelectedWeek] = useState(GetAllDaysThisWeek())
+  //a wee bit of date manipulation
+  const nextMonday = new Date(selectedWeek[0])
+  nextMonday.setDate(nextMonday.getDate() + 7)
+  const previousMonday = new Date(selectedWeek[0])
+  previousMonday.setDate(previousMonday.getDate() - 7)
+  const [nextWeek, setNextWeek] = useState(GetAllDays(nextMonday.getTime()))
+  const [previousWeek, setPreviousWeek] = useState(GetAllDays(previousMonday.getTime()))
 
   //these are the component dayLists for the WeekListView.
   //they have to be done here to be passed to the EditTaskWindow
   //they have to be in the clossest common relative of the 
   //EditTaskWindow and the WeekListView
-  const [mondayDayList, setMondayDayList] = useState(null)
-  const [tuesdayDayList, setTuesdayDayList] = useState(null)
-  const [wednesdayDayList, setWednesdayDayList] = useState(null)
-  const [thursdayDayList, setThursdayDayList] = useState(null)
-  const [fridayDayList, setFridayDayList] = useState(null)
-  const [saturdayDayList, setSaturdayDayList] = useState(null)
-  const [sundayDayList, setSundayDayList] = useState(null)
+
+  //slectedDayLists holds the daylists for each day of the selected week 
+  const [selectedDayLists, setSelectedDayLists] = useState({
+    monday: null,
+    tuesday: null,
+    wednesday: null,
+    thursday: null,
+    friday: null,
+    saturday: null,
+    sunday: null
+  })
+  const [nextWeekDayLists, setNextWeekDayLists] = useState({
+    monday: null,
+    tuesday: null,
+    wednesday: null,
+    thursday: null,
+    friday: null,
+    saturday: null,
+    sunday: null
+  })
+  const [previousWeekDayLists, setPreviousWeekDayLists] = useState({
+    monday: null,
+    tuesday: null,
+    wednesday: null,
+    thursday: null,
+    friday: null,
+    saturday: null,
+    sunday: null
+  })
+  const [startedLoading, setStartedLoading] = useState(false)//used to controll loading of dayLists
+  //over many reloads
 
   //import the dayLists
   //lots of rerenders here lets see if this works
-  //this is not in a function because the hooks have to run in this scope. 
-  //Converting this repeated process to a function would require a callbac
-  if (mondayDayList == null) {
-    GetDayListFromCache(selectedWeek[0]).then((value) => {
-      if (value == undefined) {
-        setMondayDayList({
-          day: selectedWeek[0],
-          realTaskIDs: []
-        })
-        SaveDayListToCache(mondayDayList)
-      }
-      else {
-        setMondayDayList(value)
-      }
-    })
-
+  if (!startedLoading) {
+    loadDayLists(selectedDayLists, (value) => { setSelectedDayLists(value) },
+      (value) => { setStartedLoading(value) }, selectedWeek)
+    loadDayLists(nextWeekDayLists, (value) => { setNextWeekDayLists(value) },
+      (value) => { setStartedLoading(value) }, nextWeek)
+    loadDayLists(previousWeekDayLists, (value) => { setPreviousWeekDayLists(value) },
+      (value) => { setStartedLoading(value) }, previousWeek)
   }
-  if (tuesdayDayList == null) {
-    GetDayListFromCache(selectedWeek[1]).then((value) => {
-      if (value == undefined) {
-        setTuesdayDayList({
-          day: selectedWeek[1],
-          realTaskIDs: []
-        })
-        SaveDayListToCache(tuesdayDayList)
-      }
-      else {
-        setTuesdayDayList(value)
-      }
-    })
-
-  }
-  if (wednesdayDayList == null) {
-    GetDayListFromCache(selectedWeek[2]).then((value) => {
-      if (value == undefined) {
-        setWednesdayDayList({
-          day: selectedWeek[2],
-          realTaskIDs: []
-        })
-        SaveDayListToCache(wednesdayDayList)
-      }
-      else {
-        setWednesdayDayList(value)
-      }
-    })
-
-  }
-  if (thursdayDayList == null) {
-    GetDayListFromCache(selectedWeek[3]).then((value) => {
-      if (value == undefined) {
-        setThursdayDayList({
-          day: selectedWeek[3],
-          realTaskIDs: []
-        })
-        SaveDayListToCache(wednesdayDayList)
-      }
-      else {
-        setThursdayDayList(value)
-      }
-    })
-
-  }
-  if (fridayDayList == null) {
-    GetDayListFromCache(selectedWeek[4]).then((value) => {
-      if (value == undefined) {
-        setFridayDayList({
-          day: selectedWeek[4],
-          realTaskIDs: []
-        })
-        SaveDayListToCache(fridayDayList)
-      }
-      else {
-        setFridayDayList(value)
-      }
-    })
-
-  }
-  if (saturdayDayList == null) {
-    GetDayListFromCache(selectedWeek[5]).then((value) => {
-      if (value == undefined) {
-        setSaturdayDayList({
-          day: selectedWeek[5],
-          realTaskIDs: []
-        })
-        SaveDayListToCache(saturdayDayList)
-      }
-      else {
-        setSaturdayDayList(value)
-      }
-    })
-
-  }
-  if (sundayDayList == null) {
-    GetDayListFromCache(selectedWeek[6]).then((value) => {
-      if (value == undefined) {
-        setSundayDayList({
-          day: selectedWeek[6],
-          realTaskIDs: []
-        })
-        SaveDayListToCache(sundayDayList)
-      }
-      else {
-        setSundayDayList(value)
-      }
-    })
-
-  }
-
-
 
   return (
     <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
       <EditTaskWindow
         visible={addTaskPopup}
         onClose={(newVal) => { setAddTaskPopup(newVal) }}
-        mondayDayList={mondayDayList}
-        tuesdayDayList={tuesdayDayList}
-        wednesdayDayList={wednesdayDayList}
-        thursdayDayList={thursdayDayList}
-        fridayDayList={fridayDayList}
-        saturdayDayList={saturdayDayList}
-        sundayDayList={sundayDayList}
-        onNewTaskReady={(selectedDay) => {
-          if (selectedDay == "monday") {
-            setMondayDayList({ ...mondayDayList })//set to shallow copy to force rerender  
-          }
-          else if (selectedDay == "tuesday") {
-            setTuesdayDayList({ ...tuesdayDayList })//set to shallow copy to force rerender  
-          }
-          else if (selectedDay == "wednesday") {
-            setWednesdayDayList({ ...wednesdayDayList })//set to shallow copy to force rerender  
-          }
-          else if (selectedDay == "thurday") {
-            setThursdayDayList({ ...thursdayDayList })//set to shallow copy to force rerender  
-          }
-          else if (selectedDay == "friday") {
-            setFridayDayList({ ...fridayDayList })//set to shallow copy to force rerender  
-          }
-          else if (selectedDay == "saturday") {
-            setSaturdayDayList({ ...saturdayDayList })//set to shallow copy to force rerender  
-          }
-          else if (selectedDay == "sunday") {
-            setSundayDayList({ ...sundayDayList })//set to shallow copy to force rerender  
-          }
+
+        selectedDayLists={selectedDayLists}
+        onNewTaskReady={() => {
+          setSelectedDayLists({ ...selectedDayLists })
         }}
         task={selectedTask}
       />
       <View style={{ flex: 1 }}>
 
         <WeekSlider
-          mondayDayList={mondayDayList}
-          tuesdayDayList={tuesdayDayList}
-          wednesdayDayList={wednesdayDayList}
-          thursdayDayList={thursdayDayList}
-          fridayDayList={fridayDayList}
-          saturdayDayList={saturdayDayList}
-          sundayDayList={sundayDayList}
+          selectedDayLists={selectedDayLists}
+          previousDayLists={previousWeekDayLists}
+          nextDayLists={nextWeekDayLists}
+
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
           setSelectedTask={(item) => { setSelectedTask(item) }}
+
+          moveWeekBack={() => {
+            //sort out weeks
+            const previousMonday = new Date(previousWeek[0])
+            previousMonday.setDate(previousMonday.getDate() - 7)
+            //week shift
+            setNextWeek(selectedWeek)
+            setSelectedWeek(previousWeek)
+            const newPreviousWeek = GetAllDays(previousMonday.getTime())
+            setPreviousWeek(newPreviousWeek)
+            //now reloacte dayLists
+            setNextWeekDayLists(selectedDayLists)
+            setSelectedDayLists(previousWeekDayLists)
+            setPreviousWeekDayLists({
+              monday: null,
+              tuesday: null,
+              wednesday: null,
+              thursday: null,
+              friday: null,
+              saturday: null,
+              sunday: null
+            })
+            loadDayLists(newPreviousWeek, (value) => { setPreviousWeekDayLists(value) },
+              (value) => { setStartedLoading(value) }, previousWeek)
+          }}
+          moveWeekForward={() => {
+            //sort out weeks
+            const nextMonday = new Date(nextWeek[0])
+            nextMonday.setDate(nextMonday.getDate() + 7)
+            //week shift
+            setPreviousWeek(selectedWeek)
+            setSelectedWeek(nextWeek)
+
+            const newNextWeek = GetAllDays(nextMonday.getTime())
+            setNextWeek(newNextWeek)
+            //now reloacte dayLists
+            setPreviousWeekDayLists(selectedDayLists)
+            setSelectedDayLists(nextWeekDayLists)
+            setNextWeekDayLists({
+              monday: null,
+              tuesday: null,
+              wednesday: null,
+              thursday: null,
+              friday: null,
+              saturday: null,
+              sunday: null
+            })
+            loadDayLists(newNextWeek, (value) => { setNextWeekDayLists(value) },
+              (value) => { setStartedLoading(value) }, newNextWeek)
+          }}
         />
 
 
@@ -208,4 +162,44 @@ export default (props) => {
     </View >
   )
 
+
+}
+
+//a function to asyncrinously load a week of dayLists
+const loadDayLists = (dayLists, setDayLists, setStartedLoading, theWeek) => {
+  //this function only runs if startedLoading==false
+  let myPromises = []
+
+  myPromises.push(GetDayListFromCache(theWeek[0]))
+  myPromises.push(GetDayListFromCache(theWeek[1]))
+  myPromises.push(GetDayListFromCache(theWeek[2]))
+  myPromises.push(GetDayListFromCache(theWeek[3]))
+  myPromises.push(GetDayListFromCache(theWeek[4]))
+  myPromises.push(GetDayListFromCache(theWeek[5]))
+  myPromises.push(GetDayListFromCache(theWeek[6]))
+
+  Promise.all(myPromises).then((values) => {
+    let newValues = []
+    for (let i = 0; i < 7; i++) {
+      let newVal = values[i]
+      if (newVal == undefined) {
+        newVal = {
+          day: theWeek[i],
+          realTaskIDs: []
+        }
+        SaveDayListToCache(newVal)
+      }
+      newValues.push(newVal)
+    }
+    setDayLists({
+      monday: newValues[0],
+      tuesday: newValues[1],
+      wednesday: newValues[2],
+      thursday: newValues[3],
+      friday: newValues[4],
+      saturday: newValues[5],
+      sunday: newValues[6]
+    })
+    setStartedLoading(true)
+  })
 }

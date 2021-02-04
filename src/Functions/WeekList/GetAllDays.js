@@ -6,7 +6,9 @@ export default (timesStampOfMonday) => {
   //sel is now monday
   let out = [sel.getTime()]
   for (let i = 1; i < 7; i++) {
-    out.push({ ...sel }.setDate(sel.getDate() + 1).getTime())
+    let nextDay = new Date(sel.getTime())//clone of sel
+    nextDay.setDate(sel.getDate() + i)//move dateAlong i
+    out.push(nextDay.getTime())
   }
   return out
 }

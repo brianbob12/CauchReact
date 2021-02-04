@@ -9,14 +9,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from './src/Components/Screens/HomeScreen.js';
 
-//import task stuff
-
-//import context suff
-import { TaskProvider } from "./src/Context/TaskContext.js"
-
-
-
-
 function TagsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -51,88 +43,89 @@ function RepeatingScreen() {
 
 const Tab = createBottomTabNavigator();
 export default function App() {
-  return (
-    <TaskProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              if (route.name === 'Home') {
-                return (
-                  <Ionicons
-                    name={
-                      focused
-                        ? 'checkbox'
-                        : 'checkbox-outline'
-                    }
-                    size={size}
-                    color={color}
-                  />
-                );
-              } else if (route.name === 'Classroom') {
-                return (
-                  <Ionicons
-                    name={
-                      focused
-                        ? 'log-in'
-                        : 'log-in-outline'
-                    }
-                    size={size}
-                    color={color}
-                  />
-                );
-              } else if (route.name === 'Tags') {
-                return (
-                  <Ionicons
-                    name={
-                      focused
-                        ? 'pricetags'
-                        : 'pricetags-outline'
-                    }
-                    size={size}
-                    color={color}
-                  />
-                );
-              } else if (route.name === 'Repeating Tasks') {
-                return (
-                  <Ionicons
-                    name={
-                      focused
-                        ? 'repeat'
-                        : 'repeat-outline'}
-                    size={size}
-                    color={color}
-                  />
-                );
-              } else if (route.name === 'Analytics') {
-                return (
-                  <Ionicons
-                    name={
-                      focused
-                        ? 'analytics'
-                        : 'analytics-outline'}
-                    size={size}
-                    color={color}
-                  />
-                );
-              }
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: '#00a9d4FF',
-            inactiveTintColor: 'gray',
 
-          }}
-          initialRouteName={"Home"}
-        >
-          <Tab.Screen name="Tags" component={TagsScreen} />
-          <Tab.Screen name="Classroom" component={ClassroomScreen} />
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Repeating Tasks" component={RepeatingScreen} />
-          <Tab.Screen name="Analytics" component={AnalyticsScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </TaskProvider>
+  return (
+
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if (route.name === 'Home') {
+              return (
+                <Ionicons
+                  name={
+                    focused
+                      ? 'checkbox'
+                      : 'checkbox-outline'
+                  }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Classroom') {
+              return (
+                <Ionicons
+                  name={
+                    focused
+                      ? 'log-in'
+                      : 'log-in-outline'
+                  }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Tags') {
+              return (
+                <Ionicons
+                  name={
+                    focused
+                      ? 'pricetags'
+                      : 'pricetags-outline'
+                  }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Repeating Tasks') {
+              return (
+                <Ionicons
+                  name={
+                    focused
+                      ? 'repeat'
+                      : 'repeat-outline'}
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Analytics') {
+              return (
+                <Ionicons
+                  name={
+                    focused
+                      ? 'analytics'
+                      : 'analytics-outline'}
+                  size={size}
+                  color={color}
+                />
+              );
+            }
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: '#00a9d4FF',
+          inactiveTintColor: 'gray',
+
+        }}
+        initialRouteName={"Home"}
+      >
+        <Tab.Screen name="Tags" component={TagsScreen} />
+        <Tab.Screen name="Classroom" component={ClassroomScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Repeating Tasks" component={RepeatingScreen} />
+        <Tab.Screen name="Analytics" component={AnalyticsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+
   );
 }
 
