@@ -18,7 +18,7 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
         <WeekListViewWithHeader
           dayLists={myItem.item}
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
-          setSelectedTask={(item) => { setSelectedTask(item) }}
+          setSelectedTask={(item, day) => { setSelectedTask(item, day) }}
         />
       </View>
     )

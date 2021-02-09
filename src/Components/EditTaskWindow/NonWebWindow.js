@@ -2,8 +2,13 @@ import *  as React from 'react';
 import { StyleSheet, Modal, Text, View, TouchableHighlight, TextInput } from "react-native"
 import RNPickerSelect from 'react-native-picker-select'
 
-export default ({ visible, onClose, task }) => {
+export default ({ visible, onClose, task, day }) => {
+
   var selectedDay = "monday"
+
+  if (day != null) {
+    selectedDay = day
+  }
 
   return (
     <View style={{ position: "absolute" }}>

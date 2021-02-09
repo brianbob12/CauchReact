@@ -22,6 +22,8 @@ export default (props) => {
 
   const [selectedTask, setSelectedTask] = useState(null)
 
+  const [selectedDay, setSelectedDay] = useState(null)
+
   //IMPORTANT: The current week, the preceeding week and the next week are all loaded
   //a once. 
 
@@ -93,6 +95,7 @@ export default (props) => {
           setSelectedDayLists({ ...selectedDayLists })
         }}
         task={selectedTask}
+        day={selectedDay}
       />
       <View style={{ flex: 1 }}>
 
@@ -102,7 +105,10 @@ export default (props) => {
           nextDayLists={nextWeekDayLists}
 
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
-          setSelectedTask={(item) => { setSelectedTask(item) }}
+          setSelectedTask={(item, day) => {
+            setSelectedTask(item)
+            setSelectedDay(day)
+          }}
 
           moveWeekBack1={(callback) => {
             //sort out weeks

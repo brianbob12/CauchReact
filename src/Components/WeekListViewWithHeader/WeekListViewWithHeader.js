@@ -94,8 +94,8 @@ export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {
           fridayDayList={dayLists.friday}
           saturdayDayList={dayLists.saturday}
           sundayDayList={dayLists.sunday}
-          onTaskClicked={(task) => {
-            setSelectedTask(task)
+          onTaskClicked={(task, day) => {
+            setSelectedTask(task, day)
             setAddTaskPopup(true)
           }} />
       </View>

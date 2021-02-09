@@ -7,7 +7,7 @@ import SaveTaskToCache from "../../Functions/Tasks/Caching/SaveTaskToCache"
 import SaveDayListToCahce from '../../Functions/DayList/SaveDayListToCache';
 
 export default ({ visible, selectedDayLists, onNewTaskReady,
-  task, onClose }) => {
+  task, day, onClose }) => {
   let addNewTask = (task, selectedDay) => {
     if (task.id == undefined || task.id == null) {
       task.id = Math.random().toString(32)
@@ -63,6 +63,7 @@ export default ({ visible, selectedDayLists, onNewTaskReady,
         }
         }
         task={myTask}
+        day={day}
       />
 
     )

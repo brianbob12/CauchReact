@@ -49,7 +49,7 @@ export default ({
                   <DayListView
                     dayList={mondayDayList}
                     onTaskClicked={(task) => {
-                      onTaskClicked(task)
+                      onTaskClicked(task, "monday")
                     }}
                     scrollEnabled={false}
                   />
@@ -67,7 +67,7 @@ export default ({
                   <DayListView
                     dayList={tuesdayDayList}
                     onTaskClicked={(task) => {
-                      onTaskClicked(task)
+                      onTaskClicked(task, "tuesday")
                     }}
                     scrollEnabled={false}
                   />
@@ -85,7 +85,7 @@ export default ({
                   <DayListView
                     dayList={wednesdayDayList}
                     onTaskClicked={(task) => {
-                      onTaskClicked(task)
+                      onTaskClicked(task, "wednesday")
                     }}
                     scrollEnabled={false}
                   />
@@ -103,7 +103,7 @@ export default ({
                   <DayListView
                     dayList={thursdayDayList}
                     onTaskClicked={(task) => {
-                      onTaskClicked(task)
+                      onTaskClicked(task, "thursday")
                     }}
                     scrollEnabled={false}
                   />
@@ -121,7 +121,7 @@ export default ({
                   <DayListView
                     dayList={fridayDayList}
                     onTaskClicked={(task) => {
-                      onTaskClicked(task)
+                      onTaskClicked(task, "friday")
                     }}
                     scrollEnabled={false}
                   />
@@ -139,7 +139,7 @@ export default ({
                   <DayListView
                     dayList={saturdayDayList}
                     onTaskClicked={(task) => {
-                      onTaskClicked(task)
+                      onTaskClicked(task, "saturday")
                     }}
                     scrollEnabled={false}
                   />
@@ -157,7 +157,7 @@ export default ({
                   <DayListView
                     dayList={sundayDayList}
                     onTaskClicked={(task) => {
-                      onTaskClicked(task)
+                      onTaskClicked(task, "sunday")
                     }}
                     scrollEnabled={false}
                   />
