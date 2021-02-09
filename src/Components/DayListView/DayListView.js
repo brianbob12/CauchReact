@@ -39,7 +39,7 @@ export default ({ dayList, onTaskClicked, scrollEnabled }) => {
     return (
 
       <View style={{ width: Dimensions.get("window").width, padding: 5, justifyContent: "center", alignItems: "center" }}>
-        <TaskListView task={item} onClick={onTaskClicked} onDeleteTask={(task) => { deleteTask(task) }} />
+        <TaskListView task={item} onClick={(task) => { onTaskClicked(task) }} onDeleteTask={(task) => { deleteTask(task) }} />
       </View>
 
 

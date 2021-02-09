@@ -1,14 +1,13 @@
 import *  as React from 'react';
 import { StyleSheet, Modal, Text, View, TouchableWithoutFeedback, TouchableHighlight } from "react-native"
-
+import { useState } from "react"
 import Constants from "expo-constants"
 
-import { useState } from 'react'
+
 
 //impory WeekSlider 
-import WeekSlider from "../Slidy/Slidy.js"
+import WeekSlider from "../WeekSlider/WeekSlider.js"
 
-import WeekListViewWithHeader from "../WeekListViewWithHeader/WeekListViewWithHeader.js"
 import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js'
 import SaveDayListToCache from '../../Functions/DayList/SaveDayListToCache.js'
 import GetDayListFromCache from "../../Functions/DayList/GetDayListFromCache.js"
@@ -105,18 +104,25 @@ export default (props) => {
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
           setSelectedTask={(item) => { setSelectedTask(item) }}
 
-          moveWeekBack={() => {
+          moveWeekBack1={(callback) => {
             //sort out weeks
             const previousMonday = new Date(previousWeek[0])
             previousMonday.setDate(previousMonday.getDate() - 7)
+            const newPreviousWeek = GetAllDays(previousMonday.getTime())
             //week shift
             setNextWeek(selectedWeek)
             setSelectedWeek(previousWeek)
-            const newPreviousWeek = GetAllDays(previousMonday.getTime())
             setPreviousWeek(newPreviousWeek)
             //now reloacte dayLists
-            setNextWeekDayLists(selectedDayLists)
+            const oldSelectedDayLists = selectedDayLists
             setSelectedDayLists(previousWeekDayLists)
+            callback(oldSelectedDayLists)
+          }}
+          moveWeekBack2={(oldSelectedDayLists) => {
+            //sort out weeks
+            const previousMonday = new Date(previousWeek[0])
+            previousMonday.setDate(previousMonday.getDate() - 7)
+            const newPreviousWeek = GetAllDays(previousMonday.getTime())
             setPreviousWeekDayLists({
               monday: null,
               tuesday: null,
@@ -128,20 +134,28 @@ export default (props) => {
             })
             loadDayLists(newPreviousWeek, (value) => { setPreviousWeekDayLists(value) },
               (value) => { setStartedLoading(value) }, previousWeek)
-          }}
-          moveWeekForward={() => {
+
+            setNextWeekDayLists(oldSelectedDayLists)
+          }
+          }
+          moveWeekForward1={(callback) => {
             //sort out weeks
             const nextMonday = new Date(nextWeek[0])
             nextMonday.setDate(nextMonday.getDate() + 7)
+            const newNextWeek = GetAllDays(nextMonday.getTime())
             //week shift
             setPreviousWeek(selectedWeek)
             setSelectedWeek(nextWeek)
-
-            const newNextWeek = GetAllDays(nextMonday.getTime())
             setNextWeek(newNextWeek)
             //now reloacte dayLists
-            setPreviousWeekDayLists(selectedDayLists)
+            const oldSelectedDayLists = selectedDayLists
             setSelectedDayLists(nextWeekDayLists)
+            callback(oldSelectedDayLists)
+          }}
+          moveWeekForward2={(oldSelectedDayLists) => {
+            const nextMonday = new Date(nextWeek[0])
+            nextMonday.setDate(nextMonday.getDate() + 7)
+            const newNextWeek = GetAllDays(nextMonday.getTime())
             setNextWeekDayLists({
               monday: null,
               tuesday: null,
@@ -153,6 +167,8 @@ export default (props) => {
             })
             loadDayLists(newNextWeek, (value) => { setNextWeekDayLists(value) },
               (value) => { setStartedLoading(value) }, newNextWeek)
+
+            setPreviousWeekDayLists(oldSelectedDayLists)
           }}
         />
 

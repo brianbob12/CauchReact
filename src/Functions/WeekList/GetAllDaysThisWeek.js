@@ -3,6 +3,7 @@
 //note monday was chosen as the first day of the week. Please note that Monday is not acutally the first day of the week.
 export default () => {
   let sel = new Date(Date.now())
+  sel.setHours(0, 0, 0, 0)
   sel.setDate(sel.getDate() - sel.getDay() + 1)
   //sel is now monday
   let out = [sel.getTime()]
