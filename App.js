@@ -4,17 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './src/HomeScreen.js';
 
+//import screens
 
-
-function TagsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Tags</Text>
-    </View>
-  );
-}
+import HomeScreen from './src/Components/Screens/HomeScreen.js'
+import PomodoroScreen from "./src/Components/Screens/PomodoroScreen.js"
 
 function ClassroomScreen() {
   return (
@@ -42,7 +36,9 @@ function RepeatingScreen() {
 
 const Tab = createBottomTabNavigator();
 export default function App() {
+
   return (
+
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -64,20 +60,20 @@ export default function App() {
                 <Ionicons
                   name={
                     focused
-                    ? 'log-in' 
-                    : 'log-in-outline'
+                      ? 'log-in'
+                      : 'log-in-outline'
                   }
                   size={size}
                   color={color}
                 />
               );
-            } else if (route.name === 'Tags') {
+            } else if (route.name === "Pomodoro") {
               return (
                 <Ionicons
                   name={
                     focused
-                      ? 'pricetags'
-                      : 'pricetags-outline'
+                      ? 'timer'
+                      : 'timer-outline'
                   }
                   size={size}
                   color={color}
@@ -87,9 +83,9 @@ export default function App() {
               return (
                 <Ionicons
                   name={
-                    focused 
-                    ? 'repeat' 
-                    : 'repeat-outline'}
+                    focused
+                      ? 'repeat'
+                      : 'repeat-outline'}
                   size={size}
                   color={color}
                 />
@@ -98,9 +94,9 @@ export default function App() {
               return (
                 <Ionicons
                   name={
-                    focused 
-                    ? 'analytics' 
-                    : 'analytics-outline'}
+                    focused
+                      ? 'analytics'
+                      : 'analytics-outline'}
                   size={size}
                   color={color}
                 />
@@ -111,27 +107,23 @@ export default function App() {
         tabBarOptions={{
           activeTintColor: '#00a9d4FF',
           inactiveTintColor: 'gray',
+
         }}
         initialRouteName={"Home"}
       >
-        <Tab.Screen name="Tags" component={TagsScreen} />
+        <Tab.Screen name="Pomodoro" component={PomodoroScreen} />
         <Tab.Screen name="Classroom" component={ClassroomScreen} />
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Repeating Tasks" component={RepeatingScreen} /> 
+        <Tab.Screen name="Repeating Tasks" component={RepeatingScreen} />
         <Tab.Screen name="Analytics" component={AnalyticsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
+
   );
 }
 
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontFamily: 'Oxygen'
-  },
+
 });
