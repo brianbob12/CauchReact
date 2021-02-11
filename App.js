@@ -7,15 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //import screens
 
-import HomeScreen from './src/Components/Screens/HomeScreen.js';
-
-function TagsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Tags</Text>
-    </View>
-  );
-}
+import HomeScreen from './src/Components/Screens/HomeScreen.js'
+import PomodoroScreen from "./src/Components/Screens/PomodoroScreen.js"
 
 function ClassroomScreen() {
   return (
@@ -74,13 +67,13 @@ export default function App() {
                   color={color}
                 />
               );
-            } else if (route.name === 'Tags') {
+            } else if (route.name === "Pomodoro") {
               return (
                 <Ionicons
                   name={
                     focused
-                      ? 'pricetags'
-                      : 'pricetags-outline'
+                      ? 'timer'
+                      : 'timer-outline'
                   }
                   size={size}
                   color={color}
@@ -118,7 +111,7 @@ export default function App() {
         }}
         initialRouteName={"Home"}
       >
-        <Tab.Screen name="Tags" component={TagsScreen} />
+        <Tab.Screen name="Pomodoro" component={PomodoroScreen} />
         <Tab.Screen name="Classroom" component={ClassroomScreen} />
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Repeating Tasks" component={RepeatingScreen} />
