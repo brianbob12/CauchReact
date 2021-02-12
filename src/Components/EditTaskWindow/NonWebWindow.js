@@ -30,6 +30,7 @@ export default ({ visible, onClose, task, day }) => {
           onClose={(icon) => {
             setIconScreenVisible(false)
             task.icon = icon
+            task.iconColor = "#C5C5C5"
           }}
         />
         <View style={styles.centeredView}>
