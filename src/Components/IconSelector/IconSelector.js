@@ -9,7 +9,7 @@ export default ({ iconName, locked, onPress }) => {
         onPress={locked ? () => {
           Alert.alert(
             "This is a premium icon",
-            "Get premium to use this icon",
+            "Get premium to use this icon " + iconName,
             [
               { text: "Get Premium", onPress: () => {/*fill this in later*/ } },
               { text: "Cancel", onPress: () => { } }

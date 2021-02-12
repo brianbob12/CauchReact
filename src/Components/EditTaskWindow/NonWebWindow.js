@@ -27,7 +27,10 @@ export default ({ visible, onClose, task, day }) => {
       >
         <IconSelectionScreen
           visible={iconScreenVisible}
-          onClose={() => { setIconScreenVisible(false) }}
+          onClose={(icon) => {
+            setIconScreenVisible(false)
+            task.icon = icon
+          }}
         />
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -66,9 +69,16 @@ export default ({ visible, onClose, task, day }) => {
                 <View style={{ height: 50, alignContent: "center" }}>
                   <TouchableWithoutFeedback
                     style={{ flex: 1, alignContent: "center" }}
-                    onPress={() => { setIconScreenVisible(visible) }}
+                    onPress={() => { setIconScreenVisible(true) }}
                   >
-                    <Ionicons name={"add-circle"} size={50} color={"#C5C5C5"} />
+                    <Ionicons
+                      name={
+                        (task.icon == null || task.icon == undefined) ?
+                          "add-circle" : task.icon
+                      }
+                      size={50}
+                      color={"#C5C5C5"}
+                    />
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 3 }}>
