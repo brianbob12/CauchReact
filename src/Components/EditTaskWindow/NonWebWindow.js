@@ -32,6 +32,7 @@ export default ({ visible, onClose, task, day }) => {
             task.icon = icon
             task.iconColor = "#C5C5C5"
           }}
+          selectedIcon={task.icon}
         />
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

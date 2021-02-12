@@ -2,7 +2,7 @@ import * as React from "react"
 import { StyleSheet, View, Text, Modal, TouchableHighlight, ScrollView, FlatList } from "react-native"
 import IconSelector from "../IconSelector/IconSelector.js"
 
-export default ({ visible, onClose }) => {
+export default ({ visible, onClose, selectedIcon }) => {
   let icons = ["add-circle-outline", "add-outline", "airplane-outline",
     "alarm-outline", "albums-outline", "alert-circle-outline", "alert-outline",
     "american-football-outline", "analytics-outline", "aperture-outline", "apps-outline",
@@ -11,13 +11,13 @@ export default ({ visible, onClose }) => {
     "arrow-redo-circle-outline", "arrow-redo-outline", "arrow-undo-circle-outline",
     "arrow-undo-outline", "arrow-up-circle-outline", "arrow-up-outline", "at-circle-outline",
     "at-outline", "attach-outline", "backspace-outline",
-    "bandage-outline", "bar-chart-outline", "barbell-outline", "barcode-outline", "baseball-outline",
+    "bandage-outline", "bar-chart-outline", "barcode-outline", "baseball-outline",
     "basket-outline", "basketball-outline", "battery-charging-outline", "battery-dead-outline",
     "battery-full-outline", "battery-half-outline", "beaker-outline", "bed-outline", "beer-outline",
     "bicycle-outline", "bluetooth-outline", "boat-outline", "body-outline", "bonfire-outline",
-    "book-outline", "bookmark-outline", "bookmarks-outline", "briefcase-outline",
-    "browsers-outline", "brush-outline", "bug-outline", "build-outline", "bulb-outline", "bus-outline",
-    "business-outline", "cafe-outline", "calculator-outline", "calendar-outline", "call-outline", "camera-outline",
+    "bookmark-outline", "bookmarks-outline", "briefcase-outline",
+    "browsers-outline", "bug-outline", "build-outline", "bulb-outline", "bus-outline",
+    "business-outline", "cafe-outline", "calendar-outline", "call-outline", "camera-outline",
     "camera-reverse-outline", "car-outline", "car-sport-outline", "card-outline",
     "caret-back-circle-outline", "caret-back-outline", "caret-down-circle-outline",
     "caret-down-outline", "caret-forward-circle-outline", "caret-forward-outline",
@@ -80,7 +80,7 @@ export default ({ visible, onClose }) => {
     "repeat-outline", "resize-outline", "restaurant-outline", "return-down-back-outline",
     "return-down-forward-outline", "return-up-back-outline", "return-up-forward-outline",
     "ribbon-outline", "rocket-outline", "rose-outline", "sad-outline", "save-outline",
-    "scan-circle-outline", "scan-outline", "school-outline", "search-circle-outline", "search-outline",
+    "scan-circle-outline", "scan-outline", "search-circle-outline", "search-outline",
     "send-outline", "server-outline", "settings-outline", "shapes-outline", "share-outline",
     "share-social-outline", "shield-checkmark-outline", "shield-outline",
     "shirt-outline", "shuffle-outline", "skull-outline", "snow-outline",
@@ -140,11 +140,35 @@ export default ({ visible, onClose }) => {
                 <Text style={{}}>Free Icons</Text>
               </View>
               <View style={{ flex: 2, flexDirection: "row", justifyContent: "space-around" }}>
-                <IconSelector iconName={"book-outline"} onPress={() => { onClose("book-outline") }} locked={false} />
-                <IconSelector iconName={"barbell-outline"} onPress={() => { onClose("barbell-outline") }} locked={false} />
-                <IconSelector iconName={"school-outline"} onPress={() => { onClose("school-outline") }} locked={false} />
-                <IconSelector iconName={"brush-outline"} onPress={() => { onClose("brush-outline") }} locked={false} />
-                <IconSelector iconName={"calculator-outline"} onPress={() => { onClose("calculator-outline") }} locked={false} />
+                <IconSelector iconName={"book-outline"}
+                  onPress={() => { onClose("book-outline") }}
+                  locked={false}
+                  selected={"book-outline" === selectedIcon}
+                />
+                <IconSelector
+                  iconName={"barbell-outline"}
+                  onPress={() => { onClose("barbell-outline") }}
+                  locked={false}
+                  selected={"barbell-outline" === selectedIcon}
+                />
+                <IconSelector
+                  iconName={"school-outline"}
+                  onPress={() => { onClose("school-outline") }}
+                  locked={false}
+                  selected={"school-outline" === selectedIcon}
+                />
+                <IconSelector
+                  iconName={"brush-outline"}
+                  onPress={() => { onClose("brush-outline") }}
+                  locked={false}
+                  selected={"brush-outline" === selectedIcon}
+                />
+                <IconSelector
+                  iconName={"calculator-outline"}
+                  onPress={() => { onClose("calculator-outline") }}
+                  locked={false}
+                  selected={"calculator-outline" === selectedIcon}
+                />
               </View>
             </View>
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -164,7 +188,12 @@ export default ({ visible, onClose }) => {
                       {toRender.map(icon => {
                         return (
                           <View style={{ width: 60, justifyContent: "center", alignItems: "center" }}>
-                            <IconSelector iconName={icon} onPress={() => { }} locked={true} />
+                            <IconSelector
+                              iconName={icon}
+                              onPress={() => { }}
+                              locked={true}
+                              selected={icon === selectedIcon}
+                            />
                           </View>
                         )
                       })}

@@ -105,8 +105,8 @@ export default function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: '#00a9d4FF',
-          inactiveTintColor: 'gray',
+          activeTintColor: "#00a9d4FF",
+          inactiveTintColor: "gray",
 
         }}
         initialRouteName={"Home"}
