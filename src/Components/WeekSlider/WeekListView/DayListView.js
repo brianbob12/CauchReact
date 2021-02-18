@@ -5,7 +5,6 @@ import { Dimensions, StyleSheet, SafeAreaView, Text, View, FlatList, StatusBar, 
 
 import Constants from 'expo-constants'
 //shows a drag and drop list of all tasks in a given dayList
-//must be in a SafeAreaView
 
 //TEMPORARY
 import SaveTaskToCache from "../../../Functions/Tasks/Caching/SaveTaskToCache.js"
