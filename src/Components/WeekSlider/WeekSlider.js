@@ -1,7 +1,7 @@
 import *  as React from 'react'
 import { SafeAreaView, FlatList, StyleSheet, ScrollView, Text, View, Dimensions } from "react-native"
 import { useState } from 'react'
-import WeekListViewWithHeader from "../WeekListViewWithHeader/WeekListViewWithHeader"
+import WeekListViewWithHeader from "./WeekListView/WeekListViewWithHeader.js"
 //a caursel of storts
 
 export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPopup,

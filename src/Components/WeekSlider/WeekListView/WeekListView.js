@@ -7,15 +7,15 @@ import { useState } from 'react'
 
 import { Ionicons } from '@expo/vector-icons'
 
-import getDayToday from "../../Functions/DayList/GetDayToday.js"
+import getDayToday from "../../../Functions/DayList/GetDayToday.js"
 
 
 
 //import dayListView
-import DayListView from "../DayListView/DayListView.js"
-import GetAllDays from '../../Functions/WeekList/GetAllDays.js'
-import SaveDayListToCache from '../../Functions/DayList/SaveDayListToCache.js'
-import GetDayListFromCache from "../../Functions/DayList/GetDayListFromCache.js"
+import DayListView from "./DayListView.js"
+import GetAllDays from '../../../Functions/WeekList/GetAllDays.js'
+import SaveDayListToCache from '../../../Functions/DayList/SaveDayListToCache.js'
+import GetDayListFromCache from "../../../Functions/DayList/GetDayListFromCache.js"
 
 //selectedWeek is a list of days in the week
 export default ({

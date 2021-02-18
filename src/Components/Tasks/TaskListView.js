@@ -27,14 +27,18 @@ export default ({ task, onClick, onDeleteTask }) => {
             onPress={() => { onDeleteTask(task) }}
           >
             <View style={{ flex: 1, padding: 5 }}>
-              <Ionicons name={trashIcon} size={20} color="red" />
+              <Ionicons name={trashIcon} size={25} color="red" />
             </View>
           </TouchableWithoutFeedback>
         </View>
         <View style={{ flex: 4 }}>
           <Text>{task.name}</Text>
         </View>
-        <View style={{ flex: 1 }} />
+        <View style={{ flex: 1, justifyContent: "center", flexDirection: "row", alignItems: "center" }} >
+          {(task.icon != null && task.icon != undefined) &&
+            <Ionicons name={task.icon} size={40} color={task.iconColor} />
+          }
+        </View>
       </TouchableOpacity>
     </View >
 
