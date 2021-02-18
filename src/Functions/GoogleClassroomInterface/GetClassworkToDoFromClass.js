@@ -1,7 +1,7 @@
 //a function that gets classwork to do from a class
 //requires Oauth token
 
-import getDayToday from "../Functions/DayList/GetDayToday.js"
+import getDayToday from "../DayList/GetDayToday.js"
 
 export default (accessToken, courseId) => {
   return (new Promise((resolve, reject) => {

@@ -2,7 +2,7 @@ import *  as React from 'react';
 import { StyleSheet, Modal, Text, View, TouchableWithoutFeedback, TouchableHighlight } from "react-native"
 
 import WeekListView from "../WeekListView/WeekListView.js"
-import GetAllDaysThisWeek from "../../Functions/WeekList/GetAllDaysThisWeek.js"
+import GetAllDaysThisWeek from "../../../Functions/WeekList/GetAllDaysThisWeek.js"
 import { Ionicons } from '@expo/vector-icons'
 
 export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {

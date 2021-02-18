@@ -2,7 +2,7 @@ import * as React from "react"
 import * as Google from "expo-auth-session/providers/google";
 import { Button, View, Alert } from "react-native";
 
-import GetClassworkToDoFromClass from "../../GoogleClassroomInterface/GetClassworkToDoFromClass.js"
+import GetClassworkToDoFromClass from "../../Functions/GoogleClassroomInterface/GetClassworkToDoFromClass.js"
 
 //no support for web
 
