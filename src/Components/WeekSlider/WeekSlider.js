@@ -13,10 +13,8 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
 
   //callbacks for when WeekLists have finished loading their tasks
   const onFinishedLoading = (index) => {
-    console.log("onFinishedLoading")
     //Since I am scrolling to the middle slide I only care about when the middle slide is finished loading
     if (index == 1) {
-      console.log(readyToScroll.toString() + " and " + (flatListRef != null).toString())
       //we are finally ready to scroll
       if (readyToScroll && flatListRef != null) {
         flatListRef.scrollToIndex({ index: 1, animated: false })
@@ -26,7 +24,6 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
         else {
           moveWeekForward2(data.data)
         }
-        console.log("scrolled")
         setReadyToScroll(false)
       }
     }
