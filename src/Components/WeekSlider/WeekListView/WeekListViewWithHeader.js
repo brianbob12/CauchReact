@@ -5,7 +5,7 @@ import WeekListView from "./WeekListView.js"
 import Header from "../../Headers/MultipurposeAddHeader.js"
 import GetAllDaysThisWeek from "../../../Functions/WeekList/GetAllDaysThisWeek.js"
 
-export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {
+export default ({ dayLists, setAddTaskPopup, setSelectedTask, onFinishedLoadingWeek }) => {
   //determine the label at the top of the header
   var headerLabel = "Week Starting "
   if (dayLists.monday == null) {
@@ -73,7 +73,9 @@ export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {
           onTaskClicked={(task, day) => {
             setSelectedTask(task, day)
             setAddTaskPopup(true)
-          }} />
+          }}
+          onFinishedLoadingWeek={onFinishedLoadingWeek}
+        />
       </View>
     </View>
   )

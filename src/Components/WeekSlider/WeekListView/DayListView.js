@@ -20,10 +20,12 @@ const childrenWidth = width
 const childrenHeight = 48
 const childrenSpacing = 8
 
-export default ({ dayList, onTaskClicked, scrollEnabled }) => {
+export default ({ dayList, onTaskClicked, scrollEnabled, onFinishedLoadingTasks }) => {
   //scrollEnabled is a boolean that is false when scrolling should be prevented 
   //dayList is the object that holds th realTaskIDs
   //ontaskClicked is a callback for when tasks are clicked
+  //onFinishedLoadingTasks is a callback for when all of the tasks are finished loading
+  //this is used for scrolling
 
   if (dayList == null) {
     dayList = { realTaskIDs: [] }
@@ -100,8 +102,11 @@ export default ({ dayList, onTaskClicked, scrollEnabled }) => {
       //TODO check if already loaded
       myPromises.push(GetTaskFromCache(taskID))
     })
+    //wait until all of the tasks are loaded from cache before rerendering
     Promise.all(myPromises).then((values) => {
       setDisplayedTasks(values)
+      //callback
+      onFinishedLoadingTasks()
     })
   }
 

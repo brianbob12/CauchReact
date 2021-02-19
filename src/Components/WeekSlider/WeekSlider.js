@@ -11,14 +11,36 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
   //the data hook is only used under the condition that readyToScroll=true
   //this is part of the scrolling system
 
+  //callbacks for when WeekLists have finished loading their tasks
+  const onFinishedLoading = (index) => {
+    console.log("onFinishedLoading")
+    //Since I am scrolling to the middle slide I only care about when the middle slide is finished loading
+    if (index == 1) {
+      console.log(readyToScroll.toString() + " and " + (flatListRef != null).toString())
+      //we are finally ready to scroll
+      if (readyToScroll && flatListRef != null) {
+        flatListRef.scrollToIndex({ index: 1, animated: false })
+        if (data.backwards) {
+          moveWeekBack2(data.data)
+        }
+        else {
+          moveWeekForward2(data.data)
+        }
+        console.log("scrolled")
+        setReadyToScroll(false)
+      }
+    }
+  }
   //views are functional components
   let render = (myItem) => {
+
     return (
       <View style={{ width: Dimensions.get("window").width }}>
         <WeekListViewWithHeader
           dayLists={myItem.item}
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
           setSelectedTask={(item, day) => { setSelectedTask(item, day) }}
+          onFinishedLoadingWeek={() => { onFinishedLoading(myItem.index) }}
         />
       </View>
     )
@@ -33,18 +55,6 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
         showsHorizontalScrollIndicator={false}
         ref={(ref) => {
           flatListRef = ref
-          //jenky code
-          //deals with scrolling
-          if (readyToScroll && flatListRef != null) {
-            flatListRef.scrollToIndex({ index: 1, animated: false })
-            if (data.backwards) {
-              moveWeekBack2(data.data)
-            }
-            else {
-              moveWeekForward2(data.data)
-            }
-            setReadyToScroll(false)
-          }
         }}
         initialScrollIndex={1}
         onScrollEndDrag={(data) => {

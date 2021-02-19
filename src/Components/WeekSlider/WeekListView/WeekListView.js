@@ -26,12 +26,51 @@ export default ({
   fridayDayList,
   saturdayDayList,
   sundayDayList,
-  onTaskClicked
+  onTaskClicked,
+  onFinishedLoadingWeek
 }) => {
 
   const [addTaskPopup, setAddTaskPopup] = useState(false)
 
   const [selectedTask, setSelectedTask] = useState(null)
+
+  //onFinishedLoadingWeek must be called when all constituant days have recently loaded
+  //a list of variables to track if each day has recently loaded
+  var mondayRecentlyLoaded = false
+  var tuesdayRecentlyLoaded = false
+  var wednesdayRecentlyLoaded = false
+  var thursdayRecentlyLoaded = false
+  var fridayRecentlyLoaded = false
+  var saturdayRecentlyLoaded = false
+  var sundayRecentlyLoaded = false
+  //this function runs when any day has finished loading it's tasks
+  const dayRecentlyLoaded = () => {
+    //checks if all days(that have tasks) have recently loaded
+    if (mondayDayList.realTaskIDs.length > 0 && !mondayRecentlyLoaded) { return ({}) }
+    if (tuesdayDayList.realTaskIDs.length > 0 && !tuesdayRecentlyLoaded) { return ({}) }
+    if (wednesdayDayList.realTaskIDs.length > 0 && !wednesdayRecentlyLoaded) { return ({}) }
+    if (thursdayDayList.realTaskIDs.length > 0 && !thursdayRecentlyLoaded) { return ({}) }
+    if (fridayDayList.realTaskIDs.length > 0 && !fridayRecentlyLoaded) { return ({}) }
+    if (saturdayDayList.realTaskIDs.length > 0 && !saturdayRecentlyLoaded) { return ({}) }
+    if (sundayDayList.realTaskIDs.length > 0 && !sundayRecentlyLoaded) { return ({}) }
+    //only runs if all previous conditions are not met
+    onFinishedLoadingWeek()
+  }
+
+  //check if none of the days have anything
+  if (
+    (mondayDayList == null || mondayDayList.realTaskIDs == 0) &&
+    (tuesdayDayList == null || tuesdayDayList.realTaskIDs == 0) &&
+    (wednesdayDayList == null || wednesdayDayList.realTaskIDs == 0) &&
+    (thursdayDayList == null || thursdayDayList.realTaskIDs == 0) &&
+    (fridayDayList == null || fridayDayList.realTaskIDs == 0) &&
+    (saturdayDayList == null || saturdayDayList.realTaskIDs == 0) &&
+    (sundayDayList == null || sundayDayList.realTaskIDs == 0)
+  ) {
+    //no tasks
+    //bit of a hack but I need a small delay here
+    setTimeout(onFinishedLoadingWeek, 10)
+  }
 
   return (
     <View style={{
@@ -52,6 +91,10 @@ export default ({
                       onTaskClicked(task, "monday")
                     }}
                     scrollEnabled={false}
+                    onFinishedLoadingTasks={() => {
+                      mondayRecentlyLoaded = true
+                      dayRecentlyLoaded()
+                    }}
                   />
                 </View>
               }
@@ -70,6 +113,10 @@ export default ({
                       onTaskClicked(task, "tuesday")
                     }}
                     scrollEnabled={false}
+                    onFinishedLoadingTasks={() => {
+                      tuesdayRecentlyLoaded = true
+                      dayRecentlyLoaded()
+                    }}
                   />
                 </View>
               }
@@ -88,6 +135,10 @@ export default ({
                       onTaskClicked(task, "wednesday")
                     }}
                     scrollEnabled={false}
+                    onFinishedLoadingTasks={() => {
+                      wednesdayRecentlyLoaded = true
+                      dayRecentlyLoaded()
+                    }}
                   />
                 </View>
               }
@@ -106,6 +157,11 @@ export default ({
                       onTaskClicked(task, "thursday")
                     }}
                     scrollEnabled={false}
+                    onFinishedLoadingTasks={onFinishedLoadingTasks}
+                    onFinishedLoadingTasks={() => {
+                      thursdayRecentlyLoaded = true
+                      dayRecentlyLoaded()
+                    }}
                   />
                 </View>
               }
@@ -124,6 +180,10 @@ export default ({
                       onTaskClicked(task, "friday")
                     }}
                     scrollEnabled={false}
+                    onFinishedLoadingTasks={() => {
+                      fridayRecentlyLoaded = true
+                      dayRecentlyLoaded()
+                    }}
                   />
                 </View>
               }
@@ -142,6 +202,10 @@ export default ({
                       onTaskClicked(task, "saturday")
                     }}
                     scrollEnabled={false}
+                    onFinishedLoadingTasks={() => {
+                      saturdayRecentlyLoaded = true
+                      dayRecentlyLoaded()
+                    }}
                   />
                 </View>
               }
@@ -160,6 +224,10 @@ export default ({
                       onTaskClicked(task, "sunday")
                     }}
                     scrollEnabled={false}
+                    onFinishedLoadingTasks={() => {
+                      sundayRecentlyLoaded = true
+                      dayRecentlyLoaded()
+                    }}
                   />
                 </View>
               }

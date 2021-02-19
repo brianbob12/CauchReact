@@ -9,27 +9,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from './src/Components/Screens/HomeScreen.js'
 import PomodoroScreen from "./src/Components/Screens/PomodoroScreen.js"
-
-function ClassroomScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Classroom</Text>
-    </View>
-  );
-}
+import ClassroomScreen from "./src/Components/Screens/ClassroomScreen.js"
+import RepeatingScreen from "./src/Components/Screens/RepeatingScreen.js"
 
 function AnalyticsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Analyctics</Text>
-    </View>
-  );
-}
-
-function RepeatingScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Repeating</Text>
     </View>
   );
 }
