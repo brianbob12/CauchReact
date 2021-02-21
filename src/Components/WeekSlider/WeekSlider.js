@@ -37,7 +37,7 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
           dayLists={myItem.item}
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
           setSelectedTask={(item, day) => { setSelectedTask(item, day) }}
-          onFinishedLoadingWeek={() => { onFinishedLoading(myItem.index) }}
+          onFinishedLoadingWeek={() => { onFinishedLoading(myItem.index.toString()) }}
         />
       </View>
     )
@@ -100,6 +100,8 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
             index
           })
         }}
+
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView >
   )

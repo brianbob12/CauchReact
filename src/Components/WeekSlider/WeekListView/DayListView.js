@@ -15,18 +15,12 @@ import SaveDayListToCache from '../../../Functions/DayList/SaveDayListToCache.js
 //setup variables
 const { width } = Dimensions.get('window')
 
-const parentWidth = width
-const childrenWidth = width
-const childrenHeight = 48
-const childrenSpacing = 8
-
 export default ({ dayList, onTaskClicked, scrollEnabled, onFinishedLoadingTasks }) => {
   //scrollEnabled is a boolean that is false when scrolling should be prevented 
   //dayList is the object that holds th realTaskIDs
   //ontaskClicked is a callback for when tasks are clicked
   //onFinishedLoadingTasks is a callback for when all of the tasks are finished loading
   //this is used for scrolling
-
   if (dayList == null) {
     dayList = { realTaskIDs: [] }
   }
@@ -82,8 +76,13 @@ export default ({ dayList, onTaskClicked, scrollEnabled, onFinishedLoadingTasks 
   //check if the displayedTasks is up to date
   let same = true
   if (displayedTasks.length == dayList.realTaskIDs.length) {
-    //old school iteration
     for (let i = 0; i < displayedTasks.length; i++) {
+      if (displayedTasks[i] == null) {
+        //I am not sure why this is happening but tasks need to be
+        //re-imported if this happens
+        same = false
+        break
+      }
       if (displayedTasks[i].id == dayList.realTaskIDs[i]) {
         continue
       }
@@ -97,6 +96,7 @@ export default ({ dayList, onTaskClicked, scrollEnabled, onFinishedLoadingTasks 
     same = false
   }
   if (!same) {
+    console.log("importing")
     const myPromises = []
     dayList.realTaskIDs.forEach((taskID) => {
       //TODO check if already loaded

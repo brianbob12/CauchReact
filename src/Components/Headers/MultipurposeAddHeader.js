@@ -24,10 +24,7 @@ export default ({ text, onPlusButton }) => {
           <Text style={{ fontSize: 15 }}>{text}</Text>
         </View>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
-          <TouchableWithoutFeedback onPress={() => {
-            setAddTaskPopup(true)
-            setSelectedTask(null)
-          }}>
+          <TouchableWithoutFeedback onPress={onPlusButton}>
             <Ionicons name="add" size={35} color="gray" />
           </TouchableWithoutFeedback>
         </View>
