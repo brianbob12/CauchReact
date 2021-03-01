@@ -192,9 +192,6 @@ export default (props) => {
             callback(oldSelectedDayLists)
           }}
           moveWeekForward2={(oldSelectedDayLists) => {
-            const nextMonday = new Date(nextWeek[0])
-            nextMonday.setDate(nextMonday.getDate() + 7)
-            const newNextWeek = GetAllDays(nextMonday.getTime())
             setNextWeekDayLists({
               monday: null,
               tuesday: null,
@@ -204,8 +201,8 @@ export default (props) => {
               saturday: null,
               sunday: null
             })
-            loadDayLists(newNextWeek, (value) => { setNextWeekDayLists(value) },
-              (value) => { setStartedLoading(value) }, newNextWeek)
+            loadDayLists(nextWeek, (value) => { setNextWeekDayLists(value) },
+              (value) => { setStartedLoading(value) }, nextWeek)
 
             setPreviousWeekDayLists(oldSelectedDayLists)
           }}
