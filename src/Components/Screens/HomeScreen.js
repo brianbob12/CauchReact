@@ -88,6 +88,7 @@ export default (props) => {
   return (
     <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
       <EditTaskWindow
+        task={selectedTask}
         visible={addTaskPopup}
         onClose={(newVal) => { setAddTaskPopup(newVal) }}
         day={selectedDay}
@@ -119,12 +120,15 @@ export default (props) => {
               selectedDayList.realTaskIDs.push(task.id)
             }
             SaveDayListToCache(selectedDayList)
-            console.log(task)
             SaveTaskToCache(task).then(() => {
               setSelectedDayLists({ ...selectedDayLists })
             })
           }
         }
+        onDaySelected={(day) => setSelectedDay(day)}
+        updateTask={(task) => {
+          setSelectedTask(task)
+        }}
       />
       <View style={{ flex: 1 }}>
 

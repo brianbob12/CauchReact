@@ -96,7 +96,6 @@ export default ({ dayList, onTaskClicked, scrollEnabled, onFinishedLoadingTasks 
     same = false
   }
   if (!same) {
-    console.log("importing")
     const myPromises = []
     dayList.realTaskIDs.forEach((taskID) => {
       //TODO check if already loaded
