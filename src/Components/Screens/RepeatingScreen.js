@@ -1,14 +1,15 @@
 import * as React from "react"
 import { useState } from "react"
-import { FlatList, StyleSheet, SafeAreaView, View } from "react-native";
+import { FlatList, Dimensions, SafeAreaView, View } from "react-native";
 import Header from "../Headers/MultipurposeAddHeader.js"
 import Constants from "expo-constants"
 
 import EditTaskWindow from "../EditTaskWindow/EditTaskWindow.js"
+import TaskListView from "../Tasks/TaskListView.js"
 
 export default () => {
-  var repeatingTasks = []
-  var [addTaskPopup, setAddTaskPopup] = useState(false)
+  const [repeatingTasks, setRepeatingTasks] = useState([])
+  const [addTaskPopup, setAddTaskPopup] = useState(false)
 
   let renderTask = ({ item }) => {
     return (
@@ -25,16 +26,17 @@ export default () => {
       <EditTaskWindow
         visible={addTaskPopup}
         onClose={(newVal) => { setAddTaskPopup(newVal) }}
-        onNewTaskReady={() => {
-          //update something
-        }}
         task={null}
         day={null}
+        addNewTask={(task, selectedDay) => {
+          setRepeatingTasks([...repeatingTasks, task])
+          console.log(repeatingTasks)
+        }}
       />
       <Header
         text={"Repeating Tasks"}
         onPlusButton={() => {
-
+          setAddTaskPopup(true)
         }}
       />
       <View style={{ flex: 1 }}>
