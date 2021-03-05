@@ -1,11 +1,15 @@
 import *  as React from 'react'
 import { useState, useRef } from 'react'
 import { TouchableOpacity, Text, View, Animated, TouchableWithoutFeedback } from 'react-native'
+import { Menu, Divider } from "react-native-paper"
+import CheckBox from "@react-native-community/checkbox"
 
 import { Ionicons } from '@expo/vector-icons'
 
 export default ({ task, onClick, onDeleteTask }) => {
-  const [trashIcon, setTrashIcon] = useState("trash-outline")
+
+  const [toggleCheckbox, setToggleCheckbox] = useState(false)
+  const [menuVisible, setMenuVisible] = useState(false)
 
   return (
     <View style={{ flex: 1, alignItems: "center", flexDirection: 'row' }}>
@@ -19,18 +23,40 @@ export default ({ task, onClick, onDeleteTask }) => {
           flex: 1,
           padding: 15,
           flexDirection: "row"
-        }}>
+        }}
+        onLongPress={() => {
+          //dispaly menu
+          setMenuVisible(true)
+        }}
+      >
         <View style={{ flex: 1, alignItems: "flex-start" }}>
-          <TouchableWithoutFeedback
-            onPressIn={() => { setTrashIcon("trash") }}
-            onPressOut={() => { setTrashIcon("trash-outline") }}
-            onPress={() => { onDeleteTask(task) }}
-          >
-            <View style={{ flex: 1, padding: 5 }}>
-              <Ionicons name={trashIcon} size={25} color="red" />
-            </View>
-          </TouchableWithoutFeedback>
+          <CheckBox
+            disabled={false}
+            value={toggleCheckbox}
+            onValueChange={(value) => setToggleCheckbox(value)}
+            tintColor={"#00a9d4"}
+            tintColors={{ true: "#00a9d4", false: "#00a9d4" }}
+          />
         </View>
+        <Menu
+          visible={menuVisible}
+          onDismiss={() => setMenuVisible(false)}
+          anchor={<View style={{ width: 1, height: 1 }} />}
+        >
+          <Menu.Item
+            title="Delete"
+            onPress={() => { }}
+          />
+          <Divider />
+          <Menu.Item
+            title="Move Week"
+            onPress={() => { }}
+          />
+          <Menu.Item
+            title=""
+            onPress={() => { }}
+          />
+        </Menu>
         <View style={{ flex: 4 }}>
           <Text>{task.name}</Text>
         </View>
@@ -41,6 +67,5 @@ export default ({ task, onClick, onDeleteTask }) => {
         </View>
       </TouchableOpacity>
     </View >
-
   )
 }
