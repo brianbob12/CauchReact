@@ -45,7 +45,8 @@ export default ({ task, onClick, onDeleteTask }) => {
         >
           <Menu.Item
             title="Delete"
-            onPress={() => { }}
+            icon="delete"
+            onPress={onDeleteTask}
           />
           <Divider />
           <Menu.Item
@@ -53,8 +54,16 @@ export default ({ task, onClick, onDeleteTask }) => {
             onPress={() => { }}
           />
           <Menu.Item
-            title=""
+            title="Copy"
+            icon="content-copy"
             onPress={() => { }}
+            disabled
+          />
+          <Menu.Item
+            title="Cut"
+            icon="content-cut"
+            onPress={() => { }}
+            disabled
           />
         </Menu>
         <View style={{ flex: 4 }}>
