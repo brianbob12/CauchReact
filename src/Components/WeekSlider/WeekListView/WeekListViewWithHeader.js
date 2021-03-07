@@ -70,6 +70,7 @@ export default ({ dayLists, setAddTaskPopup, setSelectedTask, onFinishedLoadingW
           fridayDayList={dayLists.friday}
           saturdayDayList={dayLists.saturday}
           sundayDayList={dayLists.sunday}
+          doneDayList={dayLists.done}
           onTaskClicked={(task, day) => {
             setSelectedTask(task, day)
             setAddTaskPopup(true)

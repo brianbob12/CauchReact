@@ -15,7 +15,7 @@ import SaveDayListToCache from '../../../Functions/DayList/SaveDayListToCache.js
 //setup variables
 const { width } = Dimensions.get('window')
 
-export default ({ dayList, onTaskClicked, scrollEnabled, onFinishedLoadingTasks }) => {
+export default ({ dayList, onTaskClicked, onTaskChecked, scrollEnabled, onFinishedLoadingTasks, tasksCompleted }) => {
   //scrollEnabled is a boolean that is false when scrolling should be prevented 
   //dayList is the object that holds th realTaskIDs
   //ontaskClicked is a callback for when tasks are clicked
@@ -34,7 +34,12 @@ export default ({ dayList, onTaskClicked, scrollEnabled, onFinishedLoadingTasks 
     return (
 
       <View style={{ width: Dimensions.get("window").width, padding: 5, justifyContent: "center", alignItems: "center" }}>
-        <TaskListView task={item} onClick={(task) => { onTaskClicked(task) }} onDeleteTask={(task) => { deleteTask(task) }} />
+        <TaskListView
+          task={item} onClick={(task) => { onTaskClicked(task) }}
+          onDeleteTask={(task) => { deleteTask(task) }}
+          completed={tasksCompleted == true}
+          onChecked={(task) => { onTaskChecked(task) }}
+        />
       </View>
 
 

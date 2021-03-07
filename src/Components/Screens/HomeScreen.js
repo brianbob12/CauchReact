@@ -11,6 +11,8 @@ import WeekSlider from "../WeekSlider/WeekSlider.js"
 import EditTaskWindow from "../EditTaskWindow/EditTaskWindow.js"
 import SaveDayListToCache from "../../Functions/DayList/SaveDayListToCache.js"
 import GetDayListFromCache from "../../Functions/DayList/GetDayListFromCache.js"
+import SaveDoneListToCache from "../../Functions/DayList/SaveDoneListToCache.js"
+import GetDoneListFromCache from "../../Functions/DayList/GetDoneListFromCache.js"
 import GetAllDaysThisWeek from "../../Functions/WeekList/GetAllDaysThisWeek.js"
 import SaveTaskToCache from "../../Functions/Tasks/Caching/SaveTaskToCache.js"
 import GetAllDays from "../../Functions/WeekList/GetAllDays.js"
@@ -51,7 +53,8 @@ export default (props) => {
     thursday: null,
     friday: null,
     saturday: null,
-    sunday: null
+    sunday: null,
+    done: null
   })
   const [nextWeekDayLists, setNextWeekDayLists] = useState({
     monday: null,
@@ -60,7 +63,8 @@ export default (props) => {
     thursday: null,
     friday: null,
     saturday: null,
-    sunday: null
+    sunday: null,
+    done: null
   })
   const [previousWeekDayLists, setPreviousWeekDayLists] = useState({
     monday: null,
@@ -69,7 +73,8 @@ export default (props) => {
     thursday: null,
     friday: null,
     saturday: null,
-    sunday: null
+    sunday: null,
+    done: null
   })
   const [startedLoading, setStartedLoading] = useState(false)//used to controll loading of dayLists
   //over many reloads
@@ -83,6 +88,7 @@ export default (props) => {
       (value) => { setStartedLoading(value) }, nextWeek)
     loadDayLists(previousWeekDayLists, (value) => { setPreviousWeekDayLists(value) },
       (value) => { setStartedLoading(value) }, previousWeek)
+    setStartedLoading(true)
   }
 
   return (
@@ -94,6 +100,7 @@ export default (props) => {
         day={selectedDay}
         addNewTask={
           (task, selectedDay) => {
+            //the selected day cannot be done because tasks in done are not selectable
             if (task.id == undefined || task.id == null) {
               task.id = Math.random().toString(32)
             }
@@ -229,11 +236,13 @@ const loadDayLists = (dayLists, setDayLists, setStartedLoading, theWeek) => {
   myPromises.push(GetDayListFromCache(theWeek[4]))
   myPromises.push(GetDayListFromCache(theWeek[5]))
   myPromises.push(GetDayListFromCache(theWeek[6]))
+  //get done list
+  myPromises.push(GetDoneListFromCache(theWeek[0]))
 
   Promise.all(myPromises).then((values) => {
     let newValues = []
     for (let i = 0; i < 7; i++) {
-      let newVal = values[i]
+      var newVal = values[i]
       if (newVal == undefined) {
         newVal = {
           day: theWeek[i],
@@ -243,6 +252,18 @@ const loadDayLists = (dayLists, setDayLists, setStartedLoading, theWeek) => {
       }
       newValues.push(newVal)
     }
+    //for the done list
+    var doneVal = values[7]
+    if (doneVal == undefined) {
+      doneVal = {
+        day: theWeek[0],
+        realTaskIDs: []
+      }
+      SaveDoneListToCache(doneVal)
+    }
+    newValues.push(doneVal)
+
+
     setDayLists({
       monday: newValues[0],
       tuesday: newValues[1],
@@ -250,8 +271,8 @@ const loadDayLists = (dayLists, setDayLists, setStartedLoading, theWeek) => {
       thursday: newValues[3],
       friday: newValues[4],
       saturday: newValues[5],
-      sunday: newValues[6]
+      sunday: newValues[6],
+      done: newValues[7]
     })
-    setStartedLoading(true)
   })
 }
