@@ -2,6 +2,7 @@
   "expo": {
     "name": "Cauch",
     "slug": "Cauch",
+    "scheme": "cauch",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

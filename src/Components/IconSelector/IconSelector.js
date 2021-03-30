@@ -2,7 +2,14 @@ import * as React from "react"
 import { TouchableWithoutFeedback, View, Alert } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 
-export default ({ iconName, locked, onPress }) => {
+export default ({ iconName, locked, onPress, selected }) => {
+  var color = "#000000"
+  if (locked) {
+    color = "#C5C5C5"
+  }
+  if (selected) {
+    color = "#00a9d4"
+  }
   return (
     <View>
       <TouchableWithoutFeedback
@@ -17,7 +24,7 @@ export default ({ iconName, locked, onPress }) => {
           )
         } : onPress}
       >
-        <Ionicons name={iconName} size={50} color={locked ? "#c5c5c5" : "#000000"} />
+        <Ionicons name={iconName} size={50} color={color} />
       </TouchableWithoutFeedback>
     </View>
   )

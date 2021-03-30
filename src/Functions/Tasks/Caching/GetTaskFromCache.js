@@ -11,8 +11,20 @@ export default (id) => {
   return new Promise((resolve, reject) => {
     AsyncStorage.getItem("TASK" + id).then((result) => {
       //TODO deal with error
-      resolve(JSON.parse(result))
-      //resolve({ name: "test", description: "descript", id: "id" })
+      const out = JSON.parse(result)
+      if (out == null) {
+        //this is a contignecy
+        resolve({
+          name: "NULL TASK",
+          description: "This task had no stored value in cahce",
+          id: id,
+          icon: "ban-outline",
+          iconColor: "#FF0000"
+        })
+      }
+      else {
+        resolve(out)
+      }
     })
   })
 }

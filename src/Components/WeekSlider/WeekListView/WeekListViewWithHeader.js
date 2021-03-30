@@ -1,11 +1,11 @@
 import *  as React from 'react';
 import { StyleSheet, Modal, Text, View, TouchableWithoutFeedback, TouchableHighlight } from "react-native"
 
-import WeekListView from "../WeekListView/WeekListView.js"
-import GetAllDaysThisWeek from "../../Functions/WeekList/GetAllDaysThisWeek.js"
-import { Ionicons } from '@expo/vector-icons'
+import WeekListView from "./WeekListView.js"
+import Header from "../../Headers/MultipurposeAddHeader.js"
+import GetAllDaysThisWeek from "../../../Functions/WeekList/GetAllDaysThisWeek.js"
 
-export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {
+export default ({ dayLists, setAddTaskPopup, setSelectedTask, onFinishedLoadingWeek }) => {
   //determine the label at the top of the header
   var headerLabel = "Week Starting "
   if (dayLists.monday == null) {
@@ -51,36 +51,12 @@ export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {
   }
   return (
     <View style={{ flex: 1 }}>
-      <View>
-        <View
-          style={{
-            width: "100%",
-            height: 50,
-            backgroundColor: "#FFFFFFFF",
-            borderBottomColor: "#d8d8d8",
-            borderBottomWidth: 1,
-            justifyContent: "space-between",
-            alignContent: "center",
-            flexDirection: "row"
-          }}
-        >
-          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="reorder-four" size={35} color="gray" />
-          </View>
-          <View style={{ flex: 4, alignItems: "center", justifyContent: "center", flexDirection: "row" }}>
-
-            <Text style={{ fontSize: 15 }}>{headerLabel}</Text>
-          </View>
-          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
-            <TouchableWithoutFeedback onPress={() => {
-              setAddTaskPopup(true)
-              setSelectedTask(null)
-            }}>
-              <Ionicons name="add" size={35} color="gray" />
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
-      </View>
+      <Header
+        text={headerLabel}
+        onPlusButton={() => {
+          setAddTaskPopup(true)
+          setSelectedTask(null)
+        }} />
       <View style={{
         flex: 1,
         justifyContent: "center",
@@ -94,10 +70,13 @@ export default ({ dayLists, setAddTaskPopup, setSelectedTask }) => {
           fridayDayList={dayLists.friday}
           saturdayDayList={dayLists.saturday}
           sundayDayList={dayLists.sunday}
+          doneDayList={dayLists.done}
           onTaskClicked={(task, day) => {
             setSelectedTask(task, day)
             setAddTaskPopup(true)
-          }} />
+          }}
+          onFinishedLoadingWeek={onFinishedLoadingWeek}
+        />
       </View>
     </View>
   )

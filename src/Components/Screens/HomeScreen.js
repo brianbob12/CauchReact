@@ -8,10 +8,13 @@ import Constants from "expo-constants"
 //impory WeekSlider 
 import WeekSlider from "../WeekSlider/WeekSlider.js"
 
-import EditTaskWindow from '../EditTaskWindow/EditTaskWindow.js'
-import SaveDayListToCache from '../../Functions/DayList/SaveDayListToCache.js'
+import EditTaskWindow from "../EditTaskWindow/EditTaskWindow.js"
+import SaveDayListToCache from "../../Functions/DayList/SaveDayListToCache.js"
 import GetDayListFromCache from "../../Functions/DayList/GetDayListFromCache.js"
+import SaveDoneListToCache from "../../Functions/DayList/SaveDoneListToCache.js"
+import GetDoneListFromCache from "../../Functions/DayList/GetDoneListFromCache.js"
 import GetAllDaysThisWeek from "../../Functions/WeekList/GetAllDaysThisWeek.js"
+import SaveTaskToCache from "../../Functions/Tasks/Caching/SaveTaskToCache.js"
 import GetAllDays from "../../Functions/WeekList/GetAllDays.js"
 
 
@@ -50,7 +53,8 @@ export default (props) => {
     thursday: null,
     friday: null,
     saturday: null,
-    sunday: null
+    sunday: null,
+    done: null
   })
   const [nextWeekDayLists, setNextWeekDayLists] = useState({
     monday: null,
@@ -59,7 +63,8 @@ export default (props) => {
     thursday: null,
     friday: null,
     saturday: null,
-    sunday: null
+    sunday: null,
+    done: null
   })
   const [previousWeekDayLists, setPreviousWeekDayLists] = useState({
     monday: null,
@@ -68,7 +73,8 @@ export default (props) => {
     thursday: null,
     friday: null,
     saturday: null,
-    sunday: null
+    sunday: null,
+    done: null
   })
   const [startedLoading, setStartedLoading] = useState(false)//used to controll loading of dayLists
   //over many reloads
@@ -82,20 +88,54 @@ export default (props) => {
       (value) => { setStartedLoading(value) }, nextWeek)
     loadDayLists(previousWeekDayLists, (value) => { setPreviousWeekDayLists(value) },
       (value) => { setStartedLoading(value) }, previousWeek)
+    setStartedLoading(true)
   }
 
   return (
     <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
       <EditTaskWindow
+        task={selectedTask}
         visible={addTaskPopup}
         onClose={(newVal) => { setAddTaskPopup(newVal) }}
-
-        selectedDayLists={selectedDayLists}
-        onNewTaskReady={() => {
-          setSelectedDayLists({ ...selectedDayLists })
-        }}
-        task={selectedTask}
         day={selectedDay}
+        addNewTask={
+          (task, selectedDay) => {
+            //the selected day cannot be done because tasks in done are not selectable
+            if (task.id == undefined || task.id == null) {
+              task.id = Math.random().toString(32)
+            }
+            var selectedDayList = selectedDayLists.monday
+            if (selectedDay == "tuesday") {
+              selectedDayList = selectedDayLists.tuesday
+            }
+            else if (selectedDay == "wednesday") {
+              selectedDayList = selectedDayLists.wednesday
+            }
+            else if (selectedDay == "thursday") {
+              selectedDayList = selectedDayLists.thursday
+            }
+            else if (selectedDay == "friday") {
+              selectedDayList = selectedDayLists.friday
+            }
+            else if (selectedDay == "saturday") {
+              selectedDayList = selectedDayLists.saturday
+            }
+            else if (selectedDay == "sunday") {
+              selectedDayList = selectedDayLists.sunday
+            }
+            if (!selectedDayList.realTaskIDs.includes(task.id)) {
+              selectedDayList.realTaskIDs.push(task.id)
+            }
+            SaveDayListToCache(selectedDayList)
+            SaveTaskToCache(task).then(() => {
+              setSelectedDayLists({ ...selectedDayLists })
+            })
+          }
+        }
+        onDaySelected={(day) => setSelectedDay(day)}
+        updateTask={(task) => {
+          setSelectedTask(task)
+        }}
       />
       <View style={{ flex: 1 }}>
 
@@ -159,9 +199,6 @@ export default (props) => {
             callback(oldSelectedDayLists)
           }}
           moveWeekForward2={(oldSelectedDayLists) => {
-            const nextMonday = new Date(nextWeek[0])
-            nextMonday.setDate(nextMonday.getDate() + 7)
-            const newNextWeek = GetAllDays(nextMonday.getTime())
             setNextWeekDayLists({
               monday: null,
               tuesday: null,
@@ -171,8 +208,8 @@ export default (props) => {
               saturday: null,
               sunday: null
             })
-            loadDayLists(newNextWeek, (value) => { setNextWeekDayLists(value) },
-              (value) => { setStartedLoading(value) }, newNextWeek)
+            loadDayLists(nextWeek, (value) => { setNextWeekDayLists(value) },
+              (value) => { setStartedLoading(value) }, nextWeek)
 
             setPreviousWeekDayLists(oldSelectedDayLists)
           }}
@@ -199,11 +236,13 @@ const loadDayLists = (dayLists, setDayLists, setStartedLoading, theWeek) => {
   myPromises.push(GetDayListFromCache(theWeek[4]))
   myPromises.push(GetDayListFromCache(theWeek[5]))
   myPromises.push(GetDayListFromCache(theWeek[6]))
+  //get done list
+  myPromises.push(GetDoneListFromCache(theWeek[0]))
 
   Promise.all(myPromises).then((values) => {
     let newValues = []
     for (let i = 0; i < 7; i++) {
-      let newVal = values[i]
+      var newVal = values[i]
       if (newVal == undefined) {
         newVal = {
           day: theWeek[i],
@@ -213,6 +252,18 @@ const loadDayLists = (dayLists, setDayLists, setStartedLoading, theWeek) => {
       }
       newValues.push(newVal)
     }
+    //for the done list
+    var doneVal = values[7]
+    if (doneVal == undefined) {
+      doneVal = {
+        day: theWeek[0],
+        realTaskIDs: []
+      }
+      SaveDoneListToCache(doneVal)
+    }
+    newValues.push(doneVal)
+
+
     setDayLists({
       monday: newValues[0],
       tuesday: newValues[1],
@@ -220,8 +271,8 @@ const loadDayLists = (dayLists, setDayLists, setStartedLoading, theWeek) => {
       thursday: newValues[3],
       friday: newValues[4],
       saturday: newValues[5],
-      sunday: newValues[6]
+      sunday: newValues[6],
+      done: newValues[7]
     })
-    setStartedLoading(true)
   })
 }

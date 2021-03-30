@@ -1,7 +1,7 @@
 import *  as React from 'react'
 import { SafeAreaView, FlatList, StyleSheet, ScrollView, Text, View, Dimensions } from "react-native"
 import { useState } from 'react'
-import WeekListViewWithHeader from "../WeekListViewWithHeader/WeekListViewWithHeader"
+import WeekListViewWithHeader from "./WeekListView/WeekListViewWithHeader.js"
 //a caursel of storts
 
 export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPopup,
@@ -11,14 +11,33 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
   //the data hook is only used under the condition that readyToScroll=true
   //this is part of the scrolling system
 
+  //callbacks for when WeekLists have finished loading their tasks
+  const onFinishedLoading = (index) => {
+    //Since I am scrolling to the middle slide I only care about when the middle slide is finished loading
+    if (index == 1) {
+      //we are finally ready to scroll
+      if (readyToScroll && flatListRef != null) {
+        flatListRef.scrollToIndex({ index: 1, animated: false })
+        if (data.backwards) {
+          moveWeekBack2(data.data)
+        }
+        else {
+          moveWeekForward2(data.data)
+        }
+        setReadyToScroll(false)
+      }
+    }
+  }
   //views are functional components
   let render = (myItem) => {
+
     return (
       <View style={{ width: Dimensions.get("window").width }}>
         <WeekListViewWithHeader
           dayLists={myItem.item}
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
           setSelectedTask={(item, day) => { setSelectedTask(item, day) }}
+          onFinishedLoadingWeek={() => { onFinishedLoading(myItem.index.toString()) }}
         />
       </View>
     )
@@ -33,18 +52,6 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
         showsHorizontalScrollIndicator={false}
         ref={(ref) => {
           flatListRef = ref
-          //jenky code
-          //deals with scrolling
-          if (readyToScroll && flatListRef != null) {
-            flatListRef.scrollToIndex({ index: 1, animated: false })
-            if (data.backwards) {
-              moveWeekBack2(data.data)
-            }
-            else {
-              moveWeekForward2(data.data)
-            }
-            setReadyToScroll(false)
-          }
         }}
         initialScrollIndex={1}
         onScrollEndDrag={(data) => {
@@ -93,6 +100,8 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
             index
           })
         }}
+
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView >
   )
