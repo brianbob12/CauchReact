@@ -80,12 +80,12 @@ export default ({
     doneDayList.realTaskIDs.push(task.id)
     //save doneDayList
     SaveDoneListToCache(doneDayList)
-    //TODO force rerender
+    //TODO force re-render
     //remove task from dayList
     let index = dayList.realTaskIDs.findIndex((element) => element == task.id)
     dayList.realTaskIDs.splice(index, 1)
     SaveDayListToCache(dayList)
-    //force rerender
+    //force re-render
     setCounter(counter + 1)
   }
 
@@ -93,7 +93,7 @@ export default ({
     //add the task back to the day it was in previously
     if (task.day == undefined) {
       //this shouldn't happen
-      console.log("undefined day when unchecking task")
+      console.log("undefined day when un-checking task")
       //do monday
       return
     }

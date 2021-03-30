@@ -13,10 +13,31 @@ import PomodoroScreen from "./src/Components/Screens/PomodoroScreen.js"
 import ClassroomScreen from "./src/Components/Screens/ClassroomScreen.js"
 import RepeatingScreen from "./src/Components/Screens/RepeatingScreen.js"
 
-function AnalyticsScreen() {
+function AnalyticsScreenDisabled() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Analyctics</Text>
+      <Text>Analytics coming soon</Text>
+    </View>
+  );
+}
+function ClassroomScreenDisabled() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Google Classroom integration coming soon</Text>
+    </View>
+  );
+}
+function RepeatingScreenDisabled() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Repeating Tasks Coming Soon</Text>
+    </View>
+  );
+}
+function PomodoroScreenDisabled() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Pomodoro Timer Coming Soon</Text>
     </View>
   );
 }
@@ -92,17 +113,17 @@ export default function App() {
             },
           })}
           tabBarOptions={{
-            activeTintColor: "#00a9d4FF",
+            activeTintColor: "#00a9d4",
             inactiveTintColor: "gray",
 
           }}
           initialRouteName={"Home"}
         >
-          <Tab.Screen name="Pomodoro" component={PomodoroScreen} />
-          <Tab.Screen name="Classroom" component={ClassroomScreen} />
+          <Tab.Screen name="Pomodoro" component={PomodoroScreenDisabled} />
+          <Tab.Screen name="Classroom" component={ClassroomScreenDisabled} />
           <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Repeating Tasks" component={RepeatingScreen} />
-          <Tab.Screen name="Analytics" component={AnalyticsScreen} />
+          <Tab.Screen name="Repeating Tasks" component={RepeatingScreenDisabled} />
+          <Tab.Screen name="Analytics" component={AnalyticsScreenDisabled} />
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
