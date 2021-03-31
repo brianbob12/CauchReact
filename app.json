@@ -26,8 +26,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.japanesrhino.Cauch",
-      "versionCode":1,
-      "permissions":[]
+      "versionCode":1
     },
     "web": {
       "favicon": "./assets/favicon.png"
