@@ -151,11 +151,10 @@ export default (props) => {
           }}
 
           moveWeekBack1={(callback) => {
-            console.log("MWB1")
+            //console.log("MWB1")
             //sort out weeks
             const previousMonday = new Date(previousWeek[0])
             previousMonday.setDate(previousMonday.getDate() - 7)
-            console.log("previousMonday" + previousMonday.toString())
             const newPreviousWeek = GetAllDays(previousMonday.getTime())
             //week shift
             setNextWeek(selectedWeek)
@@ -167,10 +166,9 @@ export default (props) => {
             callback(oldSelectedDayLists)
           }}
           moveWeekBack2={(oldSelectedDayLists) => {
-            console.log("MWB2")
+            //console.log("MWB2")
             //sort out weeks
             const previousMonday = new Date(previousWeek[0])
-            console.log("previousMonday" + previousMonday.toString())
             const newPreviousWeek = GetAllDays(previousMonday.getTime())
             setPreviousWeekDayLists({
               monday: null,
@@ -188,7 +186,7 @@ export default (props) => {
           }
           }
           moveWeekForward1={(callback) => {
-            console.log("MWF1")
+            //console.log("MWF1")
             //sort out weeks
             const nextMonday = new Date(nextWeek[0])
             nextMonday.setDate(nextMonday.getDate() + 7)
@@ -203,7 +201,7 @@ export default (props) => {
             callback(oldSelectedDayLists)
           }}
           moveWeekForward2={(oldSelectedDayLists) => {
-            console.log("MWF2")
+            //console.log("MWF2")
             setNextWeekDayLists({
               monday: null,
               tuesday: null,
