@@ -8,6 +8,7 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
   setSelectedTask, moveWeekForward1, moveWeekBack1, moveWeekForward2, moveWeekBack2 }) => {
   const [readyToScroll, setReadyToScroll] = useState(false)
   const [data, setData] = useState({})
+  const [changeTriggered, setChangeTriggered] = useState(false)//indicates if a swipe has been initiated
   //the data hook is only used under the condition that readyToScroll=true
   //this is part of the scrolling system
 
@@ -90,14 +91,16 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
         onScroll={(data) => {
           let xOffset = data.nativeEvent.contentOffset.x / Dimensions.get("window").width
           //xOffset may get near to 2 but never actually reach 2
-          const scrollTolerance = 0.001//That's reasonable
-          if (
+          const scrollTolerance = 0.0001//That's reasonable
+          if (!changeTriggered && (
             (xOffset < 2 + scrollTolerance && xOffset > 2 - scrollTolerance) ||
-            (xOffset < 0 + scrollTolerance && xOffset > 0 - scrollTolerance)) {
+            (xOffset < 0 + scrollTolerance && xOffset > 0 - scrollTolerance))) {
             //this is where we do the switch
-            if (xOffset == 0) {
+            if (xOffset < 0 + scrollTolerance && xOffset > 0 - scrollTolerance) {
+              console.log(xOffset)
               moveWeekBack1((data) => {
                 setReadyToScroll(true)
+                setChangeTriggered(false)
                 setData({ data: data, backwards: true })
                 //wait for rerender
               })
@@ -105,6 +108,7 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
             else {
               moveWeekForward1((data) => {
                 setReadyToScroll(true)
+                setChangeTriggered(false)
                 setData({ data: data, backwards: false })
               })
             }
