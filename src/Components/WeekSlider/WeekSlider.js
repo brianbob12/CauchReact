@@ -30,11 +30,10 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
   }
   //views are functional components
   let render = (myItem) => {
-
     return (
       <View style={{ width: Dimensions.get("window").width }}>
         <WeekListViewWithHeader
-          dayLists={myItem.item}
+          dayLists={myItem.item.content}
           setAddTaskPopup={(item) => { setAddTaskPopup(item) }}
           setSelectedTask={(item, day) => { setSelectedTask(item, day) }}
           onFinishedLoadingWeek={() => { onFinishedLoading(myItem.index.toString()) }}
@@ -46,7 +45,22 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FlatList
-        data={[previousDayLists, selectedDayLists, nextDayLists]}
+        data={
+          [
+            {
+              id: "0x0",
+              content: previousDayLists
+            },
+            {
+              id: "0x1",
+              content: selectedDayLists
+            },
+            {
+              id: "0x2",
+              content: nextDayLists
+            }
+          ]
+        }
         renderItem={render}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -75,7 +89,11 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
 
         onScroll={(data) => {
           let xOffset = data.nativeEvent.contentOffset.x / Dimensions.get("window").width
-          if (xOffset == 2 || xOffset == 0) {
+          //xOffset may get near to 2 but never actually reach 2
+          const scrollTolerance = 0.001//That's reasonable
+          if (
+            (xOffset < 2 + scrollTolerance && xOffset > 2 - scrollTolerance) ||
+            (xOffset < 0 + scrollTolerance && xOffset > 0 - scrollTolerance)) {
             //this is where we do the switch
             if (xOffset == 0) {
               moveWeekBack1((data) => {
