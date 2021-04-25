@@ -119,7 +119,7 @@ export default function App() {
           }}
           initialRouteName={"Home"}
         >
-          <Tab.Screen name="Pomodoro" component={PomodoroScreenDisabled} />
+          <Tab.Screen name="Pomodoro" component={PomodoroScreen} />
           <Tab.Screen name="Classroom" component={ClassroomScreenDisabled} />
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Repeating Tasks" component={RepeatingScreenDisabled} />
