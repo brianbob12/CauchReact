@@ -97,7 +97,7 @@ export default ({ selectedDayLists, nextDayLists, previousDayLists, setAddTaskPo
             (xOffset < 0 + scrollTolerance && xOffset > 0 - scrollTolerance))) {
             //this is where we do the switch
             if (xOffset < 0 + scrollTolerance && xOffset > 0 - scrollTolerance) {
-              console.log(xOffset)
+              //console.log(xOffset)
               moveWeekBack1((data) => {
                 setReadyToScroll(true)
                 setChangeTriggered(false)
